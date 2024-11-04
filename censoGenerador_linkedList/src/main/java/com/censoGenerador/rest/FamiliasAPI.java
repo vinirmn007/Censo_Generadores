@@ -1,6 +1,7 @@
 package com.censoGenerador.rest;
 
 import java.util.HashMap;
+import java.time.LocalDateTime;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,7 +14,6 @@ import javax.ws.rs.core.Response;
 
 import com.censoGenerador.controls.dao.services.CrudRegisterServices;
 import com.censoGenerador.controls.dao.services.FamiliaServices;
-import com.censoGenerador.models.CrudRegister;
 import com.censoGenerador.models.Familia;
 
 @Path("familias")
@@ -34,6 +34,7 @@ public class FamiliasAPI {
         
         crs.getRegister().setOperacion("READ");
         crs.getRegister().setDetalle("Lectura de todas las familias");
+        crs.getRegister().setHora(LocalDateTime.now().toString());
         crs.save();
 
         return Response.ok(map).build();
@@ -59,6 +60,7 @@ public class FamiliasAPI {
             
             crs.getRegister().setOperacion("CREATE");
             crs.getRegister().setDetalle("Creacion de la familia: " + fs.getFamilia().getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();
@@ -87,6 +89,7 @@ public class FamiliasAPI {
 
         crs.getRegister().setOperacion("READ");
         crs.getRegister().setDetalle("Lectura de la familia: " + fs.getFamilia().getId());
+        crs.getRegister().setHora(LocalDateTime.now().toString());
         crs.save();
 
         map.put("msg", "OK");
@@ -116,6 +119,7 @@ public class FamiliasAPI {
 
             crs.getRegister().setOperacion("UPDATE");
             crs.getRegister().setDetalle("Actualizacion de la familia: " + fs.getFamilia().getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();
@@ -155,6 +159,7 @@ public class FamiliasAPI {
             
             crs.getRegister().setOperacion("DELETE");
             crs.getRegister().setDetalle("Eliminacion de la familia: "+ familia.getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();

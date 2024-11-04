@@ -1,18 +1,16 @@
 package com.censoGenerador.models;
 
-import java.time.LocalDateTime;
-
 public class CrudRegister {
     private Integer id;
     private String operacion;
     private String detalle;
-    //private LocalDateTime hora;
+    private String hora;
 
     public CrudRegister() {
         this.id = 0;
         this.operacion = "NINGUNA";
         this.detalle = "";
-        //this.hora = LocalDateTime.now();
+        this.hora = getHora();
     }
 
     public Integer getId() {
@@ -39,11 +37,11 @@ public class CrudRegister {
         this.detalle = detalle;
     }
 
-    /*public LocalDateTime getHora() {
+    public String getHora() {
         return this.hora;
     }
 
-    public void setHora(LocalDateTime hora) {
+    public void setHora(String hora) {
         this.hora = hora;
-    }*/
+    }
 }
