@@ -1,12 +1,12 @@
 package com.censoGenerador.controls.dao;
 
 import com.censoGenerador.controls.dao.implement.AdapterDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.censoGenerador.models.Familia;
 
 public class FamiliaDao extends AdapterDao<Familia> {
     private Familia familia;
-    private LinkedList listAll;
+    private ListArray listAll;
 
     public FamiliaDao() {
         super(Familia.class);
@@ -24,7 +24,7 @@ public class FamiliaDao extends AdapterDao<Familia> {
         this.familia = familia;
     }
 
-    public LinkedList getListAll() {
+    public ListArray getListAll() {
         if (listAll == null) {
             this.listAll = listAll();
         }

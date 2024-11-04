@@ -29,10 +29,10 @@
                 <td>
                   {{ familia.generadorId }}
                 </td>
-                <td><a class="btn btn-black" href="/linkedList/familias/generador/register/{{ familia.id }}">Registrar Generador</a></td>
-                <td><a class="btn btn-black" href="/linkedList/familias/edit/{{ familia.id }}">Modificar</a></td>
+                <td><a class="btn btn-black" href="/censo/familias/generador/register/{{ familia.id }}">Registrar Generador</a></td>
+                <td><a class="btn btn-black" href="/censo/familias/edit/{{ familia.id }}">Modificar</a></td>
                 <td>
-                  <form action="/linkedList/familias/delete" method="POST">
+                  <form action="/censo/familias/delete" method="POST">
                     <input type="hidden" value="{{familia.id}}" name="id">
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                   </form>
@@ -42,7 +42,7 @@
         </tbody>
       </table>
     </div>
-    <a class="btn btn-primary" href="/linkedList/familias/registro">Añadir</a>
-    <a class="btn btn-primary" href="/linkedList/generadores">Ver Generadores</a>
+    <a class="btn btn-primary" href="/censo/familias/registro">Añadir</a>
+    <a class="btn btn-primary" href="/censo/generadores">Ver Generadores</a>
 </div>
 {% endblock %}

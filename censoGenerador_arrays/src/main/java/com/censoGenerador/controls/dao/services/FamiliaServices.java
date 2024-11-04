@@ -1,7 +1,7 @@
 package com.censoGenerador.controls.dao.services;
 
 import com.censoGenerador.controls.dao.FamiliaDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.censoGenerador.models.Familia;
 
 public class FamiliaServices {
@@ -19,7 +19,7 @@ public class FamiliaServices {
         this.familia.setFamilia(familia);
     }
 
-    public LinkedList getListAll() {
+    public ListArray getListAll() {
         return this.familia.getListAll();
     }
 

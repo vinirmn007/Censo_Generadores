@@ -1,7 +1,6 @@
 package com.censoGenerador.models;
 
 import com.censoGenerador.controls.dao.services.CrudRegisterServices;
-import com.censoGenerador.list.LinkedList;
 import com.google.gson.Gson;
 
 public class pruebas {

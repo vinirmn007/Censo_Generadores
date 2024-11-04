@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 
 import com.censoGenerador.controls.dao.services.CrudRegisterServices;
 import com.censoGenerador.controls.dao.services.FamiliaServices;
-import com.censoGenerador.models.CrudRegister;
 import com.censoGenerador.models.Familia;
 
 @Path("familias")

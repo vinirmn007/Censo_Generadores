@@ -1,12 +1,12 @@
 package com.censoGenerador.controls.dao;
 
 import com.censoGenerador.controls.dao.implement.AdapterDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.censoGenerador.models.Generador;
 
 public class GeneradorDao extends AdapterDao<Generador> {
     private Generador generador;
-    private LinkedList listAll;
+    private ListArray listAll;
 
     public GeneradorDao() {
         super(Generador.class);
@@ -24,7 +24,7 @@ public class GeneradorDao extends AdapterDao<Generador> {
         this.generador = generador;
     }
 
-    public LinkedList getListAll() {
+    public ListArray getListAll() {
         if (listAll == null) {
             this.listAll = listAll();
         }

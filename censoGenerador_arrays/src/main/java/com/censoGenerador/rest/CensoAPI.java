@@ -1,22 +1,16 @@
 package com.censoGenerador.rest;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.censoGenerador.controls.dao.services.CensoServices;
 import com.censoGenerador.controls.dao.services.CrudRegisterServices;
 import com.censoGenerador.controls.dao.services.FamiliaServices;
-import com.censoGenerador.controls.dao.services.GeneradorServices;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.censoGenerador.models.Familia;
-import com.censoGenerador.models.Generador;
 
 import java.util.HashMap;
 
@@ -30,12 +24,12 @@ public class CensoAPI {
             CensoServices cs = new CensoServices();
             FamiliaServices fs = new FamiliaServices();
     
-            LinkedList<Familia> familias = fs.getListAll();
+            ListArray<Familia> familias = fs.getListAll();
             cs.getCenso().setFamilias(familias);
             cs.getCenso().determinarFamiliasConGenerador();
             cs.saveFamiliasConGenerador();
     
-            LinkedList<Familia> familiasConGenerador = cs.getCenso().getFamiliasConGenerador();
+            ListArray<Familia> familiasConGenerador = cs.getCenso().getFamiliasConGenerador();
     
             if (familiasConGenerador == null || familiasConGenerador.isEmpty() || familias == null || familias.isEmpty()) {
                 map.put("msg", "OK");

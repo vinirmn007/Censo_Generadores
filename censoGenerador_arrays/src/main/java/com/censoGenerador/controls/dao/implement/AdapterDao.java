@@ -1,7 +1,8 @@
 package com.censoGenerador.controls.dao.implement;
 
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.google.gson.Gson;
+
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileReader;
@@ -18,21 +19,23 @@ public class AdapterDao<T> implements InterfazDao<T> {
     }
 
     @Override
-    public LinkedList listAll() {
-        LinkedList<T> list = new LinkedList<>();
+    public ListArray listAll() {
+        ListArray<T> list = new ListArray<>();
         try {
             String data = readFile();
             T[] matrix = (T[]) gson.fromJson(data, java.lang.reflect.Array.newInstance(clazz, 0).getClass());
-            list.toList(matrix);
+            for (T item : matrix) {
+                list.add(item); 
+            }
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
         return list;
     }
 
     @Override
     public void persist(T obj) throws Exception {
-        LinkedList<T> list = listAll();
+        ListArray<T> list = listAll();
         list.add(obj);
         String info = gson.toJson(list.toArray());
         saveFile(info);
@@ -40,7 +43,7 @@ public class AdapterDao<T> implements InterfazDao<T> {
 
     @Override
     public void merge(T obj, Integer id) throws Exception {
-        LinkedList<T> list = listAll();
+        ListArray<T> list = listAll();
 
         for (int i = 0; i < list.getSize(); i++) {
             T objActual = list.get(i);
@@ -57,7 +60,7 @@ public class AdapterDao<T> implements InterfazDao<T> {
 
     @Override
     public T get(Integer id) throws Exception {
-        LinkedList<T> list = listAll();
+        ListArray<T> list = listAll();
         if (!list.isEmpty()) {
             for (int i = 0; i < list.getSize(); i++) {
                 T obj = list.get(i);
@@ -72,7 +75,7 @@ public class AdapterDao<T> implements InterfazDao<T> {
 
     @Override
     public void delete(Integer id) throws Exception {
-        LinkedList<T> list = listAll();
+        ListArray<T> list = listAll();
         
         for (int i = 0; i < list.getSize(); i++) {
             T obj = list.get(i);

@@ -1,7 +1,7 @@
 package com.censoGenerador.controls.dao.services;
 
 import com.censoGenerador.controls.dao.CrudRegisterDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.censoGenerador.models.CrudRegister;
 
 public class CrudRegisterServices {
@@ -19,7 +19,7 @@ public class CrudRegisterServices {
         this.register.setRegister(register);
     }
 
-    public LinkedList getListAll() {
+    public ListArray getListAll() {
         return this.register.getListAll();
     }
 

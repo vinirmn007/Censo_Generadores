@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Registro de Generador</h1>
 <div class="col-md-6 col-lg-4">    
-    <form action="/linkedList/familias/generador/save" method="POST">
+    <form action="/censo/familias/generador/save" method="POST">
         <input type="hidden" value="{{familia.id}}" name="familiaId">
         <div class="form-group form-inline">
             <label
@@ -114,7 +114,7 @@
         </div>
         <div class="card-action">
             <button class="btn btn-success" type="submit">Enviar</button>
-            <a href="/linkedList/familias" class="btn btn-danger">Cancelar</a>
+            <a href="/censo/familias" class="btn btn-danger">Cancelar</a>
           </div>
     </form>
 </div>

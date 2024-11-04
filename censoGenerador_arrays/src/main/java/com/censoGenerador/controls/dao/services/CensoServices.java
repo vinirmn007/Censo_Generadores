@@ -1,7 +1,7 @@
 package com.censoGenerador.controls.dao.services;
 
 import com.censoGenerador.controls.dao.CensoDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.censoGenerador.models.Censo;
 
 public class CensoServices {
@@ -19,7 +19,7 @@ public class CensoServices {
         this.censo.setCenso(censo);
     }
 
-    public LinkedList getListAll() {
+    public ListArray getListAll() {
         return this.censo.getListAll();
     }
 

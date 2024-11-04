@@ -1,27 +1,27 @@
 package com.censoGenerador.models;
 
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 
 public class Censo {
-    private LinkedList<Familia> familias;
-    private LinkedList<Familia> familiasConGenerador;
+    private ListArray<Familia> familias;
+    private ListArray<Familia> familiasConGenerador;
 
     public Censo() {
-        this.familias = new LinkedList<>();
-        this.familiasConGenerador = new LinkedList<>();
+        this.familias = new ListArray<>();
+        this.familiasConGenerador = new ListArray<>();
     }
 
     //GETTERS Y SETTERS
 
-    public LinkedList<Familia> getFamilias() {
+    public ListArray<Familia> getFamilias() {
         return this.familias;
     }
 
-    public void setFamilias(LinkedList<Familia> familias) {
+    public void setFamilias(ListArray<Familia> familias) {
         this.familias = familias;
     }
 
-    public LinkedList<Familia> getFamiliasConGenerador() {
+    public ListArray<Familia> getFamiliasConGenerador() {
         return this.familiasConGenerador;
     }
 

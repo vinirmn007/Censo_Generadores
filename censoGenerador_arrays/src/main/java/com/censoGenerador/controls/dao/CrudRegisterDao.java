@@ -1,12 +1,12 @@
 package com.censoGenerador.controls.dao;
 
 import com.censoGenerador.controls.dao.implement.AdapterDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.censoGenerador.models.CrudRegister;
 
 public class CrudRegisterDao extends AdapterDao<CrudRegister>{
     private CrudRegister register;
-    private LinkedList listAll;
+    private ListArray listAll;
 
     public CrudRegisterDao() {
         super(CrudRegister.class);
@@ -24,7 +24,7 @@ public class CrudRegisterDao extends AdapterDao<CrudRegister>{
         this.register = register;
     }
 
-    public LinkedList getListAll() {
+    public ListArray getListAll() {
         if (listAll == null) {
             this.listAll = listAll();
         }
