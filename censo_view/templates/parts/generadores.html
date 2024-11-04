@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Generadores{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+      <div class="card-title">Generadores</div>
+    </div>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Consumo por Hora (Combustible)</th>
+            <th scope="col">Energia Generada (M. Watts)</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Uso</th>
+            <th scope="col">Familia</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for generador in generadores %}
+            <tr>
+                <td>{{ generador.id }}</td>
+                <td>{{ generador.marca }}</td>
+                <td>{{ generador.modelo }}</td>
+                <td>{{ generador.consumoPorHora }}</td>
+                <td>{{ generador.energiaGenerada }}</td>
+                <td>{{ generador.precio }}</td>
+                <td>{{ generador.uso }}</td>
+                <td>{{ generador.familia.apellido }}</td>
+                <td><a class="btn btn-black" href="/linkedList/generadores/edit/{{ generador.id }}">Modificar</a></td>
+                <td>
+                  <form action="/linkedList/generadores/delete" method="POST">
+                    <input type="hidden" value="{{generador.id}}" name="id">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                  </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+</div>
+{% endblock %}

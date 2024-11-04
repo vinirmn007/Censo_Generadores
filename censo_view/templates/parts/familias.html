@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Familias{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+      <div class="card-title">Familias</div>
+    </div>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Nro. Integrantes</th>
+            <th scope="col">Generador</th>
+            <th scope="col">Registrar Generador</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for familia in familias %}
+            <tr>
+                <td>{{ familia.id }}</td>
+                <td>{{ familia.apellido }}</td>
+                <td>{{ familia.nroIntegrantes }}</td>
+                <td>
+                  {{ familia.generadorId }}
+                </td>
+                <td><a class="btn btn-black" href="/linkedList/familias/generador/register/{{ familia.id }}">Registrar Generador</a></td>
+                <td><a class="btn btn-black" href="/linkedList/familias/edit/{{ familia.id }}">Modificar</a></td>
+                <td>
+                  <form action="/linkedList/familias/delete" method="POST">
+                    <input type="hidden" value="{{familia.id}}" name="id">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                  </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <a class="btn btn-primary" href="/linkedList/familias/registro">Añadir</a>
+    <a class="btn btn-primary" href="/linkedList/generadores">Ver Generadores</a>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Familia{% endblock %}
+
+{% block content %}
+<h1>Modificacion de Familia</h1>
+<div class="col-md-6 col-lg-4">    
+    <form action="/linkedList/familias/update" method="POST">
+        <input type="hidden" value="{{familia.id}}" name="id">
+        <div class="form-group form-inline">
+        <label
+            for="inlineinput"
+            class="col-md-3 col-form-label"
+            >Apellido</label
+        >
+        <div class="col-md-9 p-0">
+            <input
+            type="text"
+            class="form-control input-full"
+            id="inlineinput"
+            placeholder="Ingresa un Apellido"
+            name="apellido"
+            required
+            value="{{familia.apellido}}"
+            />
+        </div>
+        </div>
+        <div class="form-group form-inline">
+            <label
+                for="inlineinput"
+                class="col-md-3 col-form-label"
+                >Nro. Integrantes</label
+            >
+            <div class="col-md-9 p-0">
+                <input
+                type="number"
+                class="form-control input-full"
+                id="inlineinput"
+                placeholder="Ingresa el Nro. de Integrantes"
+                name="integrantes"
+                min="1"
+                max="20"
+                required
+                value="{{familia.nroIntegrantes}}"
+                />
+            </div>
+        </div>
+        <div class="card-action">
+            <button class="btn btn-success" type="submit">Guardar</button>
+            <a href="/linkedList/familias" class="btn btn-danger">Cancelar</a>
+          </div>
+    </form>
+</div>
+{% endblock %}

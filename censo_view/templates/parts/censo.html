@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Familias con Generador{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+      <div class="card-title">Familias con Generador</div>
+    </div>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Nro. Integrantes</th>
+              <th scope="col">Generador</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for familia in familiasCG %}
+              <tr>
+                  <td>{{ familia.id }}</td>
+                  <td>{{ familia.apellido }}</td>
+                  <td>{{ familia.nroIntegrantes }}</td>
+                  <td>{{ familia.generadorId }}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    </div>
+    <a class="btn btn-primary" href="/linkedList/familias">Ver todas las Familias</a>
+    <a class="btn btn-primary" href="/linkedList/generadores">Ver todos los Generadores</a>
+    <a class="btn btn-primary" href="/linkedList/historial">Ver el historial de Registros CRUD</a>
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Generador{% endblock %}
+
+{% block content %}
+<h1>Registro de Generador</h1>
+<div class="col-md-6 col-lg-4">    
+    <form action="/linkedList/generadores/update" method="POST">
+        <input type="hidden" value="{{generador.id}}" name="id">
+        <div class="form-group form-inline">
+            <label
+                for="inlineinput"
+                class="col-md-3 col-form-label"
+                >Marca</label
+            >
+            <div class="col-md-9 p-0">
+                <input
+                type="text"
+                class="form-control input-full"
+                id="inlineinput"
+                placeholder="Ingresa la Marca"
+                name="marca"
+                required
+                value="{{generador.marca}}"
+                />
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label
+                for="inlineinput"
+                class="col-md-3 col-form-label"
+                >Modelo</label
+            >
+            <div class="col-md-9 p-0">
+                <input
+                type="text"
+                class="form-control input-full"
+                id="inlineinput"
+                placeholder="Ingresa el Modelo"
+                name="modelo"
+                required
+                value="{{generador.modelo}}"
+                />
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label
+                for="inlineinput"
+                class="col-md-3 col-form-label"
+                >Consumo por Hora</label
+            >
+            <div class="col-md-9 p-0">
+                <input
+                type="number"
+                class="form-control input-full"
+                id="inlineinput"
+                placeholder="Ingresa el Consumo de combustible por hora"
+                name="consumo"
+                step="any"
+                required
+                value="{{generador.consumoPorHora}}"
+                />
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label
+                for="inlineinput"
+                class="col-md-3 col-form-label"
+                >Energia Generada</label
+            >
+            <div class="col-md-9 p-0">
+                <input
+                type="number"
+                class="form-control input-full"
+                id="inlineinput"
+                placeholder="Ingresa la Energia Generada"
+                name="energia"
+                step="any"
+                value="{{generador.energiaGenerada}}"
+                />
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label
+                for="inlineinput"
+                class="col-md-3 col-form-label"
+                >Precio</label
+            >
+            <div class="col-md-9 p-0">
+                <input
+                type="number"
+                class="form-control input-full"
+                id="inlineinput"
+                placeholder="Ingresa el Precio"
+                name="precio"
+                step="any"
+                required
+                value="{{generador.precio}}"
+                />
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label
+                for="inlineinput"
+                class="col-md-3 col-form-label"
+                >Uso</label
+            >
+            <div class="col-md-9 p-0">
+                <input
+                type="text"
+                class="form-control input-full"
+                id="inlineinput"
+                placeholder="Ingresa el uso que se le dara"
+                name="uso"
+                required
+                value="{{generador.uso}}"
+                />
+            </div>
+        </div>
+        <div class="card-action">
+            <button class="btn btn-success" type="submit">Guardar</button>
+            <a href="/linkedList/generadores" class="btn btn-danger">Cancelar</a>
+          </div>
+    </form>
+</div>
+{% endblock %}
