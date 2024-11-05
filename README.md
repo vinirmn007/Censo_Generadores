@@ -8,4 +8,4 @@
 ![image](https://github.com/user-attachments/assets/50c443a7-6cd3-45cd-855f-4419cece1dbb)  
 Los histogramas de las pruebas se pueden encontrar en el drectorio pruebas
 # Video Demostrativo 
-[Link Text](https://drive.google.com/file/d/1nQDbCd7l9pz0FwIr1Cm-wQ8jMuoCQhIu/view?usp=sharing)
+[Video](https://drive.google.com/file/d/1nQDbCd7l9pz0FwIr1Cm-wQ8jMuoCQhIu/view?usp=sharing)
