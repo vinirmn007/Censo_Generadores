@@ -1,5 +1,6 @@
 package com.censoGenerador.rest;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import javax.ws.rs.Consumes;
@@ -33,6 +34,7 @@ public class FamiliasAPI {
         
         crs.getRegister().setOperacion("READ");
         crs.getRegister().setDetalle("Lectura de todas las familias");
+        crs.getRegister().setHora(LocalDateTime.now().toString());
         crs.save();
 
         return Response.ok(map).build();
@@ -58,6 +60,7 @@ public class FamiliasAPI {
             
             crs.getRegister().setOperacion("CREATE");
             crs.getRegister().setDetalle("Creacion de la familia: " + fs.getFamilia().getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();
@@ -86,6 +89,7 @@ public class FamiliasAPI {
 
         crs.getRegister().setOperacion("READ");
         crs.getRegister().setDetalle("Lectura de la familia: " + fs.getFamilia().getId());
+        crs.getRegister().setHora(LocalDateTime.now().toString());
         crs.save();
 
         map.put("msg", "OK");
@@ -115,6 +119,7 @@ public class FamiliasAPI {
 
             crs.getRegister().setOperacion("UPDATE");
             crs.getRegister().setDetalle("Actualizacion de la familia: " + fs.getFamilia().getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();
@@ -154,6 +159,7 @@ public class FamiliasAPI {
             
             crs.getRegister().setOperacion("DELETE");
             crs.getRegister().setDetalle("Eliminacion de la familia: "+ familia.getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();

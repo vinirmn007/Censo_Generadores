@@ -1,5 +1,6 @@
 package com.censoGenerador.rest;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import javax.ws.rs.Consumes;
@@ -35,6 +36,7 @@ public class GeneradoresAPI {
 
         crs.getRegister().setOperacion("READ");
         crs.getRegister().setDetalle("Lectura de todos los generadores");
+        crs.getRegister().setHora(LocalDateTime.now().toString());
         crs.save();
 
         return Response.ok(map).build();
@@ -78,6 +80,7 @@ public class GeneradoresAPI {
 
             crs.getRegister().setOperacion("CREATE");
             crs.getRegister().setDetalle("Creacion del generador: "+ gs.getGenerador().getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();
@@ -108,6 +111,7 @@ public class GeneradoresAPI {
 
         crs.getRegister().setOperacion("READ");
         crs.getRegister().setDetalle("Lectura del generador: "+ gs.getGenerador().getId());
+        crs.getRegister().setHora(LocalDateTime.now().toString());
         crs.save();
 
         return Response.ok(map).build();
@@ -138,6 +142,7 @@ public class GeneradoresAPI {
 
             crs.getRegister().setOperacion("UPDATE");
             crs.getRegister().setDetalle("Actualizacion del generador: "+ gs.getGenerador().getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();
@@ -176,6 +181,7 @@ public class GeneradoresAPI {
 
             crs.getRegister().setOperacion("DELETE");
             crs.getRegister().setDetalle("Eliminacion del generador: "+ generador.getId());
+            crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
             return Response.ok(res).build();
