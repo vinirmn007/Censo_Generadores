@@ -21,22 +21,25 @@ public class FamiliasAPI {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFamilies() throws Exception {
-        HashMap map = new HashMap<>();
-        FamiliaServices fs = new FamiliaServices();
-        CrudRegisterServices crs = new CrudRegisterServices();
+        HashMap map = new HashMap<>(); //DICCIONARIO QUE SE DEVOLVERA COMO JSON
+
+        FamiliaServices fs = new FamiliaServices(); //SERVICO QUE OFRECE LAS OPERACIONES DE FAMILIA
+        CrudRegisterServices crs = new CrudRegisterServices(); //SERVICIO QUE OFRECE LAS OPERACIONES DEL HISTORIAL
 
         map.put("msg", "OK");
-        map.put("data", fs.getListAll().toArray());
+        map.put("data", fs.getListAll().toArray()); //SE AGREGA LA LISTA COMPLETA DE FAMILIAS 
 
         if (fs.getListAll().isEmpty()) {
             map.put("data", new Object[]{});
         }
         
+        //GUARDA LA OPERACION EN EL HISTORIAL
         crs.getRegister().setOperacion("READ");
         crs.getRegister().setDetalle("Lectura de todas las familias");
         crs.getRegister().setHora(LocalDateTime.now().toString());
         crs.save();
 
+        //DEVUELVE EL JSON
         return Response.ok(map).build();
     }
 

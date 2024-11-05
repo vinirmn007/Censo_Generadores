@@ -3,7 +3,7 @@ import requests
 
 router = Blueprint('router', __name__)
 
-URL = 'http://localhost:4000/myapp/'
+URL = 'http://localhost:8000/myapp/'
 
 @router.route('/')
 def home():
