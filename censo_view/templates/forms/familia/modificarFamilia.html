@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Modificacion de Familia</h1>
 <div class="col-md-6 col-lg-4">    
-    <form action="/linkedList/familias/update" method="POST">
+    <form action="/censo/familias/update" method="POST">
         <input type="hidden" value="{{familia.id}}" name="id">
         <div class="form-group form-inline">
         <label
@@ -47,7 +47,7 @@
         </div>
         <div class="card-action">
             <button class="btn btn-success" type="submit">Guardar</button>
-            <a href="/linkedList/familias" class="btn btn-danger">Cancelar</a>
+            <a href="/censo/familias" class="btn btn-danger">Cancelar</a>
           </div>
     </form>
 </div>

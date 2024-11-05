@@ -1,14 +1,14 @@
 package com.censoGenerador.controls.dao;
 
 import com.censoGenerador.controls.dao.implement.AdapterDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.list.ListArray;
 import com.censoGenerador.models.Censo;
 import com.censoGenerador.models.Familia;
 import com.google.gson.Gson;
 
 public class CensoDao extends AdapterDao<Censo> {
     private Censo censo;
-    private LinkedList listAll;
+    private ListArray listAll;
 
     public CensoDao() {
         super(Censo.class);
@@ -25,7 +25,7 @@ public class CensoDao extends AdapterDao<Censo> {
         this.censo = censo;
     }
 
-    public LinkedList getListAll() {
+    public ListArray getListAll() {
         if (listAll == null) {
             this.listAll = listAll();
         }
@@ -38,7 +38,7 @@ public class CensoDao extends AdapterDao<Censo> {
             this.censo = new Censo();
         }
         try {
-            LinkedList<Familia> familiasConGenerador = this.censo.getFamiliasConGenerador();
+            ListArray<Familia> familiasConGenerador = this.censo.getFamiliasConGenerador();
             Gson gson = new Gson();
             String data = gson.toJson(familiasConGenerador.toArray());
             saveFile(data);

@@ -34,9 +34,9 @@
                 <td>{{ generador.precio }}</td>
                 <td>{{ generador.uso }}</td>
                 <td>{{ generador.familia.apellido }}</td>
-                <td><a class="btn btn-black" href="/linkedList/generadores/edit/{{ generador.id }}">Modificar</a></td>
+                <td><a class="btn btn-black" href="/censo/generadores/edit/{{ generador.id }}">Modificar</a></td>
                 <td>
-                  <form action="/linkedList/generadores/delete" method="POST">
+                  <form action="/censo/generadores/delete" method="POST">
                     <input type="hidden" value="{{generador.id}}" name="id">
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                   </form>

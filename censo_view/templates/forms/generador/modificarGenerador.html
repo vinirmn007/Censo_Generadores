@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Registro de Generador</h1>
 <div class="col-md-6 col-lg-4">    
-    <form action="/linkedList/generadores/update" method="POST">
+    <form action="/censo/generadores/update" method="POST">
         <input type="hidden" value="{{generador.id}}" name="id">
         <div class="form-group form-inline">
             <label
@@ -119,7 +119,7 @@
         </div>
         <div class="card-action">
             <button class="btn btn-success" type="submit">Guardar</button>
-            <a href="/linkedList/generadores" class="btn btn-danger">Cancelar</a>
+            <a href="/censo/generadores" class="btn btn-danger">Cancelar</a>
           </div>
     </form>
 </div>
