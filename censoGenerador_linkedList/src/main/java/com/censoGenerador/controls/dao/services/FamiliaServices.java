@@ -1,7 +1,7 @@
 package com.censoGenerador.controls.dao.services;
 
 import com.censoGenerador.controls.dao.FamiliaDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.estructures.list.LinkedList;
 import com.censoGenerador.models.Familia;
 
 public class FamiliaServices {

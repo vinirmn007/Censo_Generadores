@@ -1,4 +1,4 @@
-package com.censoGenerador.list;
+package com.censoGenerador.estructures.exception;
 
 public class ListEmptyException extends Exception {
     public ListEmptyException(String msg) {

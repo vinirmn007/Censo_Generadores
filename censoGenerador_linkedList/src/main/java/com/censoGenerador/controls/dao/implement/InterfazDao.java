@@ -1,6 +1,6 @@
 package com.censoGenerador.controls.dao.implement;
 
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.estructures.list.LinkedList;
 
 public interface InterfazDao<T> {
     public void persist(T obj) throws Exception;

@@ -33,7 +33,7 @@
                 <td>{{ generador.energiaGenerada }}</td>
                 <td>{{ generador.precio }}</td>
                 <td>{{ generador.uso }}</td>
-                <td>{{ generador.familia.apellido }}</td>
+                <td>{{ generador.familiaId }}</td>
                 <td><a class="btn btn-black" href="/censo/generadores/edit/{{ generador.id }}">Modificar</a></td>
                 <td>
                   <form action="/censo/generadores/delete" method="POST">

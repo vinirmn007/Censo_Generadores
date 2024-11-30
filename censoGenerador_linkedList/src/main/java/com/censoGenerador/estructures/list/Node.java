@@ -1,4 +1,4 @@
-package com.censoGenerador.list;
+package com.censoGenerador.estructures.list;
 
 public class Node<E> {
     private E info; 

@@ -1,7 +1,7 @@
 package com.censoGenerador.controls.dao;
 
 import com.censoGenerador.controls.dao.implement.AdapterDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.estructures.list.LinkedList;
 import com.censoGenerador.models.Generador;
 
 public class GeneradorDao extends AdapterDao<Generador> {

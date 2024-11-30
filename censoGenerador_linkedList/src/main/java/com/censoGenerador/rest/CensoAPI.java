@@ -8,8 +8,7 @@ import javax.ws.rs.core.Response;
 
 import com.censoGenerador.controls.dao.services.CensoServices;
 import com.censoGenerador.controls.dao.services.CrudRegisterServices;
-import com.censoGenerador.controls.dao.services.FamiliaServices;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.estructures.list.LinkedList;
 import com.censoGenerador.models.Familia;
 
 import java.util.HashMap;
@@ -23,17 +22,14 @@ public class CensoAPI {
         HashMap map = new HashMap<>();
         try {
             CensoServices cs = new CensoServices();
-            FamiliaServices fs = new FamiliaServices();
             CrudRegisterServices crs = new CrudRegisterServices();
     
-            LinkedList<Familia> familias = fs.getListAll();
-            cs.getCenso().setFamilias(familias);
-            cs.getCenso().determinarFamiliasConGenerador();
+            cs.determinarFamiliasConGenerador();
             cs.saveFamiliasConGenerador();
     
             LinkedList<Familia> familiasConGenerador = cs.getCenso().getFamiliasConGenerador();
     
-            if (familiasConGenerador == null || familiasConGenerador.isEmpty() || familias == null || familias.isEmpty()) {
+            if (familiasConGenerador == null || familiasConGenerador.isEmpty()) {
                 map.put("msg", "OK");
                 map.put("data", new Object[]{});
             } else {

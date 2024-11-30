@@ -51,11 +51,10 @@ public class GeneradoresAPI {
 
         try {
             GeneradorServices gs = new GeneradorServices();
-            FamiliaServices fs = new FamiliaServices();
             CrudRegisterServices crs = new CrudRegisterServices();
+            FamiliaServices fs = new FamiliaServices();
 
-            Familia familia = fs.get(Integer.parseInt(map.get("familiaId").toString()));
-            if (familia == null) {
+            if (Integer.parseInt(map.get("familiaId").toString()) == 0) {
                 res.put("msg", "Error");
                 res.put("data", "Familia no encontrada");
                 return Response.status(Response.Status.BAD_REQUEST).entity(res).build();
@@ -67,13 +66,16 @@ public class GeneradoresAPI {
             gs.getGenerador().setEnergiaGenerada(Float.parseFloat(map.get("energia").toString()));
             gs.getGenerador().setPrecio(Float.parseFloat(map.get("precio").toString()));
             gs.getGenerador().setUso(map.get("uso").toString());
-            gs.getGenerador().setFamilia(familia);
-
+            gs.getGenerador().setfamiliaId(Integer.parseInt(map.get("familiaId").toString()));
             gs.save();
+
+            Familia familia = fs.get(Integer.parseInt(map.get("familiaId").toString()));
 
             familia.setGeneradorId(gs.getGenerador().getId());
             fs.setFamilia(familia);
             fs.update();
+
+            gs.save();
 
             res.put("msg", "OK");
             res.put("data", "Generador registrado y asignado a familia correctamente");

@@ -1,11 +1,12 @@
 package com.censoGenerador.controls.dao.implement;
 
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.estructures.list.LinkedList;
 import com.google.gson.Gson;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Method;
 
 public class AdapterDao<T> implements InterfazDao<T> {
     private Class clazz;
@@ -41,16 +42,15 @@ public class AdapterDao<T> implements InterfazDao<T> {
     @Override
     public void merge(T obj, Integer id) throws Exception {
         LinkedList<T> list = listAll();
-
-        for (int i = 0; i < list.getSize(); i++) {
-            T objActual = list.get(i);
-            Integer objId = (Integer) objActual.getClass().getMethod("getId").invoke(objActual);
-            if (objId.equals(id)) {
-                list.update(obj, i);
-                break;
+        if (!list.isEmpty()) {
+            T[] matriz = list.toArray();
+            for (int i = 0; i < matriz.length; i++) {
+                if (getIdent(matriz[i]).intValue() == id.intValue()) {
+                    list.update(obj, i);
+                    break;
+                }
             }
         }
-
         String info = gson.toJson(list.toArray());
         saveFile(info);
     }
@@ -59,30 +59,28 @@ public class AdapterDao<T> implements InterfazDao<T> {
     public T get(Integer id) throws Exception {
         LinkedList<T> list = listAll();
         if (!list.isEmpty()) {
-            for (int i = 0; i < list.getSize(); i++) {
-                T obj = list.get(i);
-                Integer objId = (Integer) obj.getClass().getMethod("getId").invoke(obj);
-                if (objId == id) {
-                    return obj;
+            T[] matriz = list.toArray();
+            for (int i = 0; i < matriz.length; i++) {
+                if (getIdent(matriz[i]).intValue() == id.intValue()) {
+                    return matriz[i];
                 }
             }
-        } 
+        }
         return null;
     }
 
     @Override
     public void delete(Integer id) throws Exception {
         LinkedList<T> list = listAll();
-        
-        for (int i = 0; i < list.getSize(); i++) {
-            T obj = list.get(i);
-            Integer objId = (Integer) obj.getClass().getMethod("getId").invoke(obj);
-            if (objId == id) {
-                list.delete(i);
-                break;
+        if (!list.isEmpty()) {
+            T[] matriz = list.toArray();
+            for (int i = 0; i < matriz.length; i++) {
+                if (getIdent(matriz[i]).intValue() == id.intValue()) {
+                    list.delete(i);
+                    break;
+                }
             }
         }
-
         String info = gson.toJson(list.toArray());
         saveFile(info);
     }
@@ -107,5 +105,31 @@ public class AdapterDao<T> implements InterfazDao<T> {
         file.write(data);
         file.flush();
         file.close();
+    }
+
+    private Integer getIdent(T obj) {
+        try {
+            Method method = null;
+            for (Method m : clazz.getMethods()) {
+                if (m.getName().equalsIgnoreCase("getId")) {
+                    method = m;
+                    break;
+                }
+            }
+            if (method == null) {
+                for (Method m : clazz.getSuperclass().getMethods()) {
+                    if (m.getName().equalsIgnoreCase("getId")) {
+                        method = m;
+                        break;
+                    }
+                }
+            }
+            if (method != null)
+                return (Integer) method.invoke(obj);
+        } catch (Exception e) {
+            // TODO: handle exception
+            return -1;
+        }
+        return -1;
     }
 }

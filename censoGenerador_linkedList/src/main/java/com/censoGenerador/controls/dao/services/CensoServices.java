@@ -1,7 +1,7 @@
 package com.censoGenerador.controls.dao.services;
 
 import com.censoGenerador.controls.dao.CensoDao;
-import com.censoGenerador.list.LinkedList;
+import com.censoGenerador.estructures.list.LinkedList;
 import com.censoGenerador.models.Censo;
 
 public class CensoServices {
@@ -21,6 +21,10 @@ public class CensoServices {
 
     public LinkedList getListAll() {
         return this.censo.getListAll();
+    }
+
+    public void determinarFamiliasConGenerador() {
+        this.censo.determinarFamiliasConGenerador();
     }
 
     public Boolean saveFamiliasConGenerador() throws Exception {

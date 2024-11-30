@@ -38,7 +38,7 @@ public class CensoAPI {
                 map.put("data", new Object[]{});
             } else {
                 map.put("msg", "OK");
-                map.put("data", familiasConGenerador);
+                map.put("data", familiasConGenerador.toArray());
             }
 
             crs.getRegister().setOperacion("READ");
