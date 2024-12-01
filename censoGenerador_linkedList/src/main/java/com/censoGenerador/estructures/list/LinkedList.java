@@ -2,6 +2,8 @@ package com.censoGenerador.estructures.list;
 
 import java.lang.reflect.Method;
 
+import javax.ws.rs.core.Link;
+
 import com.censoGenerador.estructures.exception.ListEmptyException;
 
 public class LinkedList<E> {
@@ -309,40 +311,136 @@ public class LinkedList<E> {
             if (data instanceof Object) {
                 E[] lista = this.toArray();
                 reset();
-
-                /*E[] left = (E[]) new Object[lista.length / 2];
-                E[] right = (E[]) new Object[lista.length - left.length];
-
-                if (lista.length <= 1) {
-                    this.toList(lista);
-                } else {
-                    int middle = lista.length / 2;
-                    for (int i = 0; i < middle - 1; i++) {
-                        left[i] = lista[i];
-                    }
-                    for (int i = middle; i < lista.length - 1; i++) {
-                        right[i - middle] = lista[i];
-                    }
-
-                    left = new LinkedList<E>().toList(left).orderByMergeSort(attribute, type).toArray();
-                    right = new LinkedList<E>().toList(right).orderByMergeSort(attribute, type).toArray();
-                    
-                    if (atrribute_compare(attribute, left[left.length], right[0], type)) { 
-                        LinkedList<E> leftList = new LinkedList<E>().toList(left);
-                        for (int i = 0; i < right.length; i++) {
-                            leftList.add(right[i]);
-                        }
-                        this.toList(leftList.toArray());
-                    }
-
-                    this.toList(merge(left, right, attribute, type).toArray());
-                }*/
-
-                sort(lista, 0, lista.length - 1, attribute, type);
-                this.toList(lista);
+                this.toList(mergeSort(lista, attribute, type));
             }
         }
         return this;
+    }
+
+    public LinkedList<E> orderByMergeSort(Integer type) throws Exception {
+        if (!isEmpty()) {
+            E data = this.header.getInfo();
+            if (data instanceof Object) {
+                E[] lista = this.toArray();
+                reset();
+                this.toList(mergeSort(lista, type));
+            }
+        }
+        return this;
+    }
+
+    //METODOS AUXILIARES PARA MERGE SORT
+    private E[] mergeSort(E[] lista, String attribute, Integer type) throws Exception {
+        if (lista.length <= 1) {
+            return lista;
+        } else {
+            int middle = lista.length / 2;
+
+            E[] left = (E[])new Object[middle];
+            E[] right = (E[])new Object[lista.length - middle];
+
+            for (int i = 0; i < middle; i++) {
+                left[i] = lista[i];
+            }
+
+            int j = 0;
+            for (int k = middle; k < lista.length; k++) {
+                right[j] = lista[k];
+                j++;
+            }
+
+            left = mergeSort(left, attribute, type);
+            right = mergeSort(right, attribute, type);
+            
+            if (left.length >= 1 && right.length >= 1) {
+                merge(lista, left, right, attribute, type);
+            }
+        }
+        return lista;
+    }
+
+    private void merge(E[] lista, E[] left, E[] right, String attribute, Integer type) throws Exception {
+        int i = 0, j = 0, k = 0;
+
+        while (i < left.length && j < right.length) {
+            if (atrribute_compare(attribute, left[i], right[j], type)) {
+                lista[k] = right[j];
+                j++;
+            } else {
+                lista[k] = left[i];
+                i++;
+            }
+            k++;
+        }
+
+        while (i < left.length) {
+            lista[k] = left[i];
+            i++;
+            k++;
+        }
+
+        while (j < right.length) {
+            lista[k] = right[j];
+            j++;
+            k++;
+        }
+    }
+
+    //PARA NUMEROS
+    private E[] mergeSort(E[] lista, Integer type) throws Exception {
+        if (lista.length <= 1) {
+            return lista;
+        } else {
+            int middle = lista.length / 2;
+
+            E[] left = (E[])new Object[middle];
+            E[] right = (E[])new Object[lista.length - middle];
+
+            for (int i = 0; i < middle; i++) {
+                left[i] = lista[i];
+            }
+
+            int j = 0;
+            for (int k = middle; k < lista.length; k++) {
+                right[j] = lista[k];
+                j++;
+            }
+
+            left = mergeSort(left, type);
+            right = mergeSort(right, type);
+            
+            if (left.length >= 1 && right.length >= 1) {
+                merge(lista, left, right, type);
+            }
+        }
+        return lista;
+    }
+
+    private void merge(E[] lista, E[] left, E[] right, Integer type) throws Exception {
+        int i = 0, j = 0, k = 0;
+
+        while (i < left.length && j < right.length) {
+            if (compare(left[i], right[j], type)) {
+                lista[k] = right[j];
+                j++;
+            } else {
+                lista[k] = left[i];
+                i++;
+            }
+            k++;
+        }
+
+        while (i < left.length) {
+            lista[k] = left[i];
+            i++;
+            k++;
+        }
+
+        while (j < right.length) {
+            lista[k] = right[j];
+            j++;
+            k++;
+        }
     }
 
     //ORDENAMIENTO POR QUICKSORT
@@ -350,13 +448,55 @@ public class LinkedList<E> {
         if (!isEmpty()) {
             E data = this.header.getInfo();
             if (data instanceof Object) {
-                E[] lista = this.toArray();
-                reset();
-                //quickSort(lista, 0, lista.length - 1, attribute, type);
-                this.toList(lista);
+                //E[] lista = this.toArray();
+                //reset();
+                
+                
             }
         }
         return this;
+    }
+
+    //METODOS AUXILIARES PARA QUICK SORT
+    private void quickSort(E[] lista, String attribute, Integer type) throws Exception {
+        if (lista.length <= 1) {
+            return;
+        } else {
+            E pivot = lista[0];
+
+            E[] less = (E[])new Object[];
+            E[] greater = (E[])new Object[0];
+            E[] equal = (E[])new Object[0];
+            
+            for (int i = 0; i < this.getSize(); i++) {
+                if (atrribute_compare(attribute, pivot, this.get(i), type)) {
+                    less.add(this.get(i));
+                } else if (atrribute_compare(attribute, this.get(i), pivot, type)) {
+                    greater.add(this.get(i));
+                } else {
+                    equal.add(this.get(i));
+                }
+            }
+
+            if (less.getSize() > 1) {
+                less.orderByQuickSort(attribute, type);                        
+            } else if (greater.getSize() > 1) {
+                greater.orderByQuickSort(attribute, type);
+            }
+
+            this.reset();
+            while (!less.isEmpty()) {
+                this.add(less.deleteFirst());
+            }
+
+            while (!equal.isEmpty()) {
+                this.add(equal.deleteFirst());
+            }
+
+            while (!greater.isEmpty()) {
+                this.add(greater.deleteFirst());
+            }
+        }
     }
 
     //BUSQUEDA BINARIA
@@ -460,34 +600,8 @@ public class LinkedList<E> {
         return null;
     }
 
-    //METODO AUXILIAR PARA MERGE SORT
-    /*private LinkedList<E> merge(E[] left, E[] right, String attribute, Integer type) throws Exception {
-        LinkedList<E> lista = new LinkedList<>();
-
-        while (left.length > 0 && right.length > 0) {
-            if (atrribute_compare(attribute, left[0], right[0], type)) {
-                lista.add(left[0]);
-                left = (E[]) java.util.Arrays.copyOfRange(left, 1, left.length);
-            } else {
-                lista.add(right[0]);
-                right = (E[]) java.util.Arrays.copyOfRange(right, 1, right.length);
-            }
-        }
-        if (left.length > 0) {
-            for (int i = 1; i < left.length; i++) {
-                lista.add(left[i]);
-            }
-        }
-        if (right.length > 0) {
-            for (int i = 1; i < right.length; i++) {
-                lista.add(right[i]);
-            }
-        }
-
-        return lista;
-    }*/
-
-    private void merge(E[] list, int left, int mid, int right, String attribute, Integer type) throws Exception {
+    //TODO: FUNCAAAAAAAA
+    /*private void merge(E[] list, int left, int mid, int right, String attribute, Integer type) throws Exception {
         int n1 = mid - left + 1;
         int n2 = right - mid;
 
@@ -535,5 +649,5 @@ public class LinkedList<E> {
 
             merge(list, left, mid, right, attribute, type);
         }
-    }
+    }*/
 }
