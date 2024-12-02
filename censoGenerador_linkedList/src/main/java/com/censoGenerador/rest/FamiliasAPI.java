@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import com.censoGenerador.controls.dao.services.CrudRegisterServices;
 import com.censoGenerador.controls.dao.services.FamiliaServices;
+import com.censoGenerador.estructures.list.LinkedList;
 import com.censoGenerador.models.Familia;
 
 @Path("familias")
@@ -36,6 +37,75 @@ public class FamiliasAPI {
         crs.getRegister().setDetalle("Lectura de todas las familias");
         crs.getRegister().setHora(LocalDateTime.now().toString());
         crs.save();
+
+        return Response.ok(map).build();
+    }
+
+    @Path("/order/shellsort/{attribute}/{type}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response orderByShellSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+        HashMap map = new HashMap<>();
+        FamiliaServices fs = new FamiliaServices();
+        map.put("msg", "OK");
+        
+        try {
+            LinkedList data = fs.orderByShellSort(attribute, type);
+            map.put("data", data.toArray());
+            if (data.isEmpty()) {
+                map.put("data", new Object[] {});
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+        }
+
+        return Response.ok(map).build();
+    }
+
+    @Path("/order/mergesort/{attribute}/{type}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response orderByMergeSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+        HashMap map = new HashMap<>();
+        FamiliaServices fs = new FamiliaServices();
+        map.put("msg", "OK");
+        
+        try {
+            LinkedList data = fs.orderByMergeSort(attribute, type);
+            map.put("data", data.toArray());
+            if (data.isEmpty()) {
+                map.put("data", new Object[] {});
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+        }
+
+        return Response.ok(map).build();
+    }
+
+    @Path("/order/quicksort/{attribute}/{type}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response orderByQuickSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+        HashMap map = new HashMap<>();
+        FamiliaServices fs = new FamiliaServices();
+        map.put("msg", "OK");
+        
+        try {
+            LinkedList data = fs.orderByQuickSort(attribute, type);
+            map.put("data", data.toArray());
+            if (data.isEmpty()) {
+                map.put("data", new Object[] {});
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+        }
 
         return Response.ok(map).build();
     }

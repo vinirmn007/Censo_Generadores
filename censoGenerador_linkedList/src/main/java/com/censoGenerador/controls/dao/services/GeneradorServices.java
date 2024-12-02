@@ -39,4 +39,16 @@ public class GeneradorServices {
     public Generador get(Integer id) throws Exception {
         return this.generador.get(id);
     }
+
+    public LinkedList orderByShellSort(String attribute, Integer type) throws Exception {
+        return this.generador.listAll().orderByShellSort(attribute, type);
+    }
+
+    public LinkedList orderByMergeSort(String attribute, Integer type) throws Exception {
+        return this.generador.listAll().orderByMergeSort(attribute, type);
+    }
+
+    public LinkedList orderByQuickSort(String attribute, Integer type) throws Exception {
+        return this.generador.listAll().orderByQuickSort(attribute, type);
+    }
 }

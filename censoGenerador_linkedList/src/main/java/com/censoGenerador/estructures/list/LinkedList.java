@@ -5,16 +5,19 @@ import java.lang.reflect.Method;
 import javax.ws.rs.core.Link;
 
 import com.censoGenerador.estructures.exception.ListEmptyException;
+import com.censoGenerador.models.Familia;
 
 public class LinkedList<E> {
     private Node<E> header;
     private Node<E> last;
     private Integer size;
+    private Boolean isOrder;
 
     public LinkedList() {
         this.header = null;
         this.last = null;
         this.size = 0;
+        this.isOrder = false;
     }
 
     public Boolean isEmpty() {
@@ -25,10 +28,15 @@ public class LinkedList<E> {
         return this.size;
     }
 
+    public Boolean isOrder() {
+        return this.isOrder;
+    }
+
     public void reset() {
         this.header = null;
         this.last = null;
         this.size = 0;
+        this.isOrder = false;
     }
 
     //METODOS PARA AGREGAR ELEMENTOS
@@ -220,6 +228,7 @@ public class LinkedList<E> {
                 this.toList(lista);
             }
         }
+        this.isOrder = true;
         return this;
     }
 
@@ -240,6 +249,7 @@ public class LinkedList<E> {
                 this.toList(lista);
             }
         }
+        this.isOrder = true;
         return this;
     }
 
@@ -271,6 +281,7 @@ public class LinkedList<E> {
                 this.toList(lista);
             }
         }
+        this.isOrder = true;
         return this;
     }
 
@@ -301,6 +312,7 @@ public class LinkedList<E> {
                 this.toList(lista);
             }
         }
+        this.isOrder = true;
         return this;
     }
 
@@ -314,18 +326,20 @@ public class LinkedList<E> {
                 this.toList(mergeSort(lista, attribute, type));
             }
         }
+        this.isOrder = true;
         return this;
     }
 
     public LinkedList<E> orderByMergeSort(Integer type) throws Exception {
         if (!isEmpty()) {
             E data = this.header.getInfo();
-            if (data instanceof Object) {
+            if (data instanceof Number || data instanceof String) {
                 E[] lista = this.toArray();
                 reset();
                 this.toList(mergeSort(lista, type));
             }
         }
+        this.isOrder = true;
         return this;
     }
 
@@ -448,59 +462,202 @@ public class LinkedList<E> {
         if (!isEmpty()) {
             E data = this.header.getInfo();
             if (data instanceof Object) {
-                //E[] lista = this.toArray();
-                //reset();
-                
-                
+                E[] lista = this.toArray();
+                reset();
+                quickSort(lista, 0, lista.length-1, attribute, type);
+                this.toList(lista);
             }
         }
+        this.isOrder = true;
+        return this;
+    }
+
+    public LinkedList<E> orderByQuickSort(Integer type) throws Exception {
+        if (!isEmpty()) {
+            E data = this.header.getInfo();
+            if (data instanceof Number || data instanceof String) {
+                E[] lista = this.toArray();
+                reset();
+                quickSort(lista, 0, lista.length-1, type);
+                this.toList(lista);
+            }
+        }
+        this.isOrder = true;
         return this;
     }
 
     //METODOS AUXILIARES PARA QUICK SORT
-    private void quickSort(E[] lista, String attribute, Integer type) throws Exception {
-        if (lista.length <= 1) {
-            return;
-        } else {
-            E pivot = lista[0];
+    private void quickSort(E[] lista, int low, int high, String attribute, Integer type) throws Exception {
+        if (low < high) {
+            int pivote = partition(lista, low, high, attribute, type);
 
-            E[] less = (E[])new Object[];
-            E[] greater = (E[])new Object[0];
-            E[] equal = (E[])new Object[0];
+            quickSort(lista, low, pivote - 1, attribute, type);
+            quickSort(lista, pivote + 1, high, attribute, type);
             
-            for (int i = 0; i < this.getSize(); i++) {
-                if (atrribute_compare(attribute, pivot, this.get(i), type)) {
-                    less.add(this.get(i));
-                } else if (atrribute_compare(attribute, this.get(i), pivot, type)) {
-                    greater.add(this.get(i));
-                } else {
-                    equal.add(this.get(i));
+        } 
+    }
+
+    private int partition(E[] lista, int low, int high, String attribute, Integer type) throws Exception {
+        E pivote = lista[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (atrribute_compare(attribute, pivote, lista[j], type)) {
+                i++;
+                E aux = lista[i];
+                lista[i] = lista[j];
+                lista[j] = aux;
+            }
+        }
+
+        E aux = lista[i + 1];
+        lista[i + 1] = lista[high];
+        lista[high] = aux;
+
+        return i + 1;
+    }
+
+    //PARA NUMEROS
+    private void quickSort(E[] lista, int low, int high, Integer type) throws Exception {
+        if (low < high) {
+            int pivote = partition(lista, low, high, type);
+
+            quickSort(lista, low, pivote - 1, type);
+            quickSort(lista, pivote + 1, high, type);
+            
+        } 
+    }
+
+    private int partition(E[] lista, int low, int high, Integer type) throws Exception {
+        E pivote = lista[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (compare(pivote, lista[j], type)) {
+                i++;
+                E aux = lista[i];
+                lista[i] = lista[j];
+                lista[j] = aux;
+            }
+        }
+
+        E aux = lista[i + 1];
+        lista[i + 1] = lista[high];
+        lista[high] = aux;
+
+        return i + 1;
+    }
+
+    //BUSQUEDA LINEAL
+    public Object linealSearch(String attribute, Object value, Integer type) throws Exception {
+        switch (type) {
+            case 1:
+                LinkedList<E> lista = new LinkedList<>();
+                if (!this.isEmpty()) {
+                    E[] aux = this.toArray();
+                    for (int i = 0; i < aux.length; i++) {
+                        if (exist_attribute(aux[i], attribute).equals(value) || ((String)exist_attribute(aux[i], attribute)).toLowerCase().startsWith(((String)value).toLowerCase())) {
+                            lista.add(aux[i]);
+                        }
+                    }
                 }
-            }
-
-            if (less.getSize() > 1) {
-                less.orderByQuickSort(attribute, type);                        
-            } else if (greater.getSize() > 1) {
-                greater.orderByQuickSort(attribute, type);
-            }
-
-            this.reset();
-            while (!less.isEmpty()) {
-                this.add(less.deleteFirst());
-            }
-
-            while (!equal.isEmpty()) {
-                this.add(equal.deleteFirst());
-            }
-
-            while (!greater.isEmpty()) {
-                this.add(greater.deleteFirst());
-            }
+                return lista;
+        
+            default:
+                E obj = null;
+                if (!this.isEmpty()) {
+                    E[] aux = this.toArray();
+                    for (int i = 0; i < aux.length; i++) {
+                        if (exist_attribute(aux[i], attribute).equals(value)) {
+                            obj = aux[i];
+                        }
+                    }
+                }
+                return obj;
         }
     }
 
-    //BUSQUEDA BINARIA
     //BUSQUEDA LINEAR BINARIA
+    public Object binarySearch(String attribute, Object value, Integer type) throws Exception {
+        if (!this.isOrder) {
+            this.orderByQuickSort(attribute, 0);
+        }
+        switch (type) {
+            case 1:
+                LinkedList<E> lista = new LinkedList<>();
+                if (!this.isEmpty()) {
+                    E[] aux = this.toArray();
+                    int first = 0;
+                    int last = aux.length - 1;
+                    
+                    while (first <= last) {
+                        int mid = (first + last) / 2;
+                        Object attrValue = exist_attribute(aux[mid], attribute);
+                        
+                        if (attrValue != null && (attrValue.equals(value) || 
+                            ((String) attrValue).toLowerCase().startsWith(((String) value).toLowerCase()))) {
+                            
+                            lista.add(aux[mid]);
+
+                            int left = mid - 1;
+                            while (left >= 0) {
+                                Object leftValue = exist_attribute(aux[left], attribute);
+                                if (leftValue != null && leftValue.equals(value)) {
+                                    lista.addHeader(aux[left]);
+                                    left--;
+                                } else {
+                                    break;
+                                }
+                            }
+
+                            int right = mid + 1;
+                            while (right < aux.length) {
+                                Object rightValue = exist_attribute(aux[right], attribute);
+                                if (rightValue != null && rightValue.equals(value)) {
+                                    lista.add(aux[right]);
+                                    right++;
+                                } else {
+                                    break;
+                                }
+                            }
+
+                            break;
+                        }
+
+                        if (compare(attrValue, value, 0)) {
+                            last = mid - 1;
+                        } else {
+                            first = mid + 1;
+                        }
+                    }
+                }
+                return lista;
+
+        
+            default:
+                E obj = null;
+                if (!this.isEmpty()) {
+                    E[] aux = this.toArray();
+                    int first = 0;
+                    int last = aux.length - 1;
+                    Boolean find = false;
+                    while (first <= last && find == false) {
+                        int mid = (first + last) / 2;
+                        if (exist_attribute(aux[mid], attribute).equals(value)) {
+                            obj = aux[mid];
+                            find = true;
+                        } else {
+                            if (compare(exist_attribute(aux[mid], attribute), value, 0)) {
+                                last = mid - 1;
+                            } else {
+                                first = mid + 1;
+                            }
+                        }
+                    }
+                }
+                return obj;
+        }
+    }
 
     //OTROS METODOS
     @Override
