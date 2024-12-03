@@ -142,6 +142,71 @@ public class FamiliasAPI {
         }
     }
 
+    @Path("/search/lineal/{attribute}/{type}/{value}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response linealSearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+        HashMap map = new HashMap<>();
+        FamiliaServices fs = new FamiliaServices();
+
+        Object searchValue = value;
+
+        try {
+            searchValue = Integer.parseInt(value);
+        } catch (NumberFormatException excepcion) {
+            // No hacer nada
+        }
+
+        try {
+            Object data = fs.getListAll().linealSearch(attribute, searchValue, type);
+            map.put("msg", "OK");
+            map.put("data", data);
+
+            if (data == null) {
+                map.put("data", "No existe");
+                return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
+        }
+
+        return Response.ok(map).build();
+    }
+
+    @Path("/search/binary/{attribute}/{type}/{value}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response binarySearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+        HashMap map = new HashMap<>();
+        FamiliaServices fs = new FamiliaServices();
+        Object searchValue = value;
+
+        try {
+            searchValue = Integer.parseInt(value);
+        } catch (NumberFormatException excepcion) {
+            // No hacer nada
+        }
+
+        try {
+            Object data = fs.getListAll().binarySearch(attribute, searchValue, type);
+            map.put("msg", "OK");
+            map.put("data", data);
+
+            if (data == null) {
+                map.put("data", "No existe");
+                return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
+        }
+
+        return Response.ok(map).build();
+    }
+
     @Path("/get/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

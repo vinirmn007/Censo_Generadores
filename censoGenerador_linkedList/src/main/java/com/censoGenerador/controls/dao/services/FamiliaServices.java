@@ -51,4 +51,12 @@ public class FamiliaServices {
     public LinkedList orderByQuickSort(String attribute, Integer type) throws Exception {
         return this.familia.listAll().orderByQuickSort(attribute, type);
     }
+
+    public Object linealSearch(String attribute, Object value, Integer type) throws Exception {
+        return this.familia.listAll().linealSearch(attribute, value, type);
+    }
+
+    public Object binarySearch(String attribute, Object value, Integer type) throws Exception {
+        return this.familia.listAll().binarySearch(attribute, value, type);
+    }
 }
