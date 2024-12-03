@@ -9,7 +9,6 @@ import javax.ws.rs.core.Response;
 
 import com.censoGenerador.controls.dao.services.CensoServices;
 import com.censoGenerador.controls.dao.services.CrudRegisterServices;
-import com.censoGenerador.controls.dao.services.FamiliaServices;
 import com.censoGenerador.estructures.list.LinkedList;
 import com.censoGenerador.models.Familia;
 
@@ -41,7 +40,7 @@ public class CensoAPI {
             }
 
             crs.getRegister().setOperacion("READ");
-            crs.getRegister().setDetalle("Lectura de todas las familias con generador");
+            crs.getRegister().setDetalle("Lectura de todas las familias con Familia");
             crs.getRegister().setHora(LocalDateTime.now().toString());
             crs.save();
 
@@ -62,8 +61,8 @@ public class CensoAPI {
         map.put("msg", "OK");
         
         try {
+            cs.determinarFamiliasConGenerador();
             LinkedList data = cs.orderByShellSort(attribute, type);
-            System.out.println(data.toString());
             map.put("data", data.toArray());
             if (data.isEmpty()) {
                 map.put("data", new Object[] {});
@@ -86,6 +85,7 @@ public class CensoAPI {
         map.put("msg", "OK");
         
         try {
+            cs.determinarFamiliasConGenerador();
             LinkedList data = cs.orderByMergeSort(attribute, type);
             map.put("data", data.toArray());
             if (data.isEmpty()) {
@@ -109,6 +109,7 @@ public class CensoAPI {
         map.put("msg", "OK");
         
         try {
+            cs.determinarFamiliasConGenerador();
             LinkedList data = cs.orderByQuickSort(attribute, type);
             map.put("data", data.toArray());
             if (data.isEmpty()) {
@@ -118,6 +119,80 @@ public class CensoAPI {
             map.put("msg", "Error");
             map.put("data", e.toString());
             return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+        }
+
+        return Response.ok(map).build();
+    }
+
+    @Path("/search/lineal/{attribute}/{type}/{value}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response linealSearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+        HashMap map = new HashMap<>();
+        CensoServices cs = new CensoServices();
+        cs.determinarFamiliasConGenerador();
+
+        try {
+            map.put("msg", "OK");
+
+            if (type == 1) {
+                LinkedList data = cs.getFamiliasConGenerador().multipleLinealSearch(attribute, value);
+                map.put("data", data.toArray());
+
+                if (data.isEmpty()) {
+                    map.put("data", "No existe");
+                    return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                }
+            } else {
+                Familia data = (Familia) cs.getFamiliasConGenerador().atomicLinealSearch(attribute, value);
+                    map.put("data", data);
+
+                    if (data == null) {
+                        map.put("data", "No existe");
+                        return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                    }
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
+        }
+
+        return Response.ok(map).build();
+    }
+
+    @Path("/search/binary/{attribute}/{type}/{value}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response binarySearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+        HashMap map = new HashMap<>();
+        CensoServices cs = new CensoServices();
+        cs.determinarFamiliasConGenerador();
+
+        try {
+            map.put("msg", "OK");
+
+            if (type == 1) {
+                LinkedList data = cs.getFamiliasConGenerador().multipleBinarySearch(attribute, value);
+                map.put("data", data.toArray());
+
+                if (data.isEmpty()) {
+                    map.put("data", "No existe");
+                    return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                }
+            } else {
+                Familia data = (Familia) cs.getFamiliasConGenerador().atomicBinarySearch(attribute, value);
+                    map.put("data", data);
+
+                    if (data == null) {
+                        map.put("data", "No existe");
+                        return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                    }
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
         }
 
         return Response.ok(map).build();

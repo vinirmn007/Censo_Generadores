@@ -51,12 +51,4 @@ public class GeneradorServices {
     public LinkedList orderByQuickSort(String attribute, Integer type) throws Exception {
         return this.generador.listAll().orderByQuickSort(attribute, type);
     }
-
-    public Object linealSearch(String attribute, Object value, Integer type) throws Exception {
-        return this.generador.listAll().linealSearch(attribute, value, type);
-    }
-
-    public Object binarySearch(String attribute, Object value, Integer type) throws Exception {
-        return this.generador.listAll().binarySearch(attribute, value, type);
-    }
 }

@@ -10,37 +10,45 @@
     <div class="card-body">
       <form id="busqueda-form" class="mb-4">
         <div class="row g-2 align-items-center">
+            <div class="col-md-2">
+                <label for="metodo" class="form-label">Método de Busqueda:</label>
+                <select class="form-select" id="metodo-busq" name="metodo-busq">
+                    <option value="lineal">LinealSearch</option>
+                    <option value="binary">BinarySearch</option>
+                </select>
+            </div>  
+
             <!-- Selector de atributo de búsqueda -->
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <label for="atributo" class="form-label">Buscar por:</label>
                 <select class="form-select" id="atributo" name="atributo">
+                    <option value="id">Id</option>
                     <option value="apellido">Apellido</option>
                     <option value="nroIntegrantes">Número de Integrantes</option>
-                    <option value="generadorId">Generador</option>
                 </select>
             </div>
 
             <!-- Campo de valor de búsqueda -->
             <div class="col-md-6">
                 <label for="valor" class="form-label">Valor de búsqueda:</label>
-                <textarea class="form-control" id="valor" name="valor" rows="1"></textarea>
+                <input type="text" class="form-control" id="valor" name="valor" rows="1" required></input>
             </div>
 
             <!-- Botón de buscar -->
             <div class="col-md-2 text-end">
                 <label class="form-label d-block invisible">Buscar</label>
-                <button type="button" class="btn btn-primary w-100" id="btn-buscar">Buscar</button>
+                <button type="submit" class="btn btn-primary w-100" id="btn-buscar">Buscar</button>
             </div>
         </div>
-    </form>
+      </form>
 
-    <!-- Formulario de ordenamiento -->
-    <form id="ordenamiento-form" class="mb-4">
+      <!-- Formulario de ordenamiento -->
+      <form id="ordenamiento-form" class="mb-4">
         <div class="row g-2 align-items-center">
             <!-- Selector de método de ordenamiento -->
             <div class="col-md-4">
               <label for="metodo" class="form-label">Método de Ordenamiento:</label>
-              <select class="form-select" id="metodo" name="metodo">
+              <select class="form-select" id="metodo-ord" name="metodo-ord">
                   <option value="shellsort">ShellSort</option>
                   <option value="mergesort">MergeSort</option>
                   <option value="quicksort">QuickSort</option>
@@ -51,88 +59,94 @@
             <div class="col-md-4">
                 <label for="criterio" class="form-label">Ordenar por:</label>
                 <select class="form-select" id="criterio" name="criterio">
+                    <option value="id">Id</option>
                     <option value="apellido">Apellido</option>
                     <option value="nroIntegrantes">Número de Integrantes</option>
-                    <option value="generadorId">Generador</option>
                 </select>
             </div>
 
             <!-- Botones de orden -->
             <div class="col-md-4 text-end">
                 <label class="form-label d-block">Orden:</label>
-                <button type="button" class="btn btn-secondary me-2" id="ascendente" data-orden="asc">Ascendente</button>
-                <button type="button" class="btn btn-secondary" id="descendente" data-orden="desc">Descendente</button>
+                <button type="submit" class="btn btn-secondary me-2 orden-button" id="ascendente" data-orden="1">Ascendente</button>
+                <button type="submit" class="btn btn-secondary orden-button" id="descendente" data-orden="0">Descendente</button>
             </div>
         </div>
       </form>
 
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Nro. Integrantes</th>
-            <th scope="col">Generador</th>
-            <th scope="col">Registrar Generador</th>
-            <th scope="col">Modificar</th>
-            <th scope="col">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for familia in familias %}
-            <tr>
-                <td>{{ familia.id }}</td>
-                <td>{{ familia.apellido }}</td>
-                <td>{{ familia.nroIntegrantes }}</td>
-                <td>
-                  {{ familia.generadorId }}
-                </td>
-                <td><a class="btn btn-black" href="/censo/familias/generador/register/{{ familia.id }}">Registrar Generador</a></td>
-                <td><a class="btn btn-black" href="/censo/familias/edit/{{ familia.id }}">Modificar</a></td>
-                <td>
-                  <form action="/censo/familias/delete" method="POST">
-                    <input type="hidden" value="{{familia.id}}" name="id">
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                  </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-      </table>
-    </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Apellido</th>
+                    <th>Nro. Integrantes</th>
+                    <th>Generador</th>
+                    <th>Registrar Generador</th>
+                    <th>Modificar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for familia in familias %}
+                    <tr>
+                        <td>{{ familia.id }}</td>
+                        <td>{{ familia.apellido }}</td>
+                        <td>{{ familia.nroIntegrantes }}</td>
+                        <td>{{ familia.generadorId }}</td>
+                        <td><a href="/censo/familias/generador/register/{{familia.id}}" class="btn btn-primary">Registrar Generador</a></td>
+                        <td><a href="/censo/familias/edit/{{familia.id}}" class="btn btn-secondary">Modificar</a></td>
+                        <td>
+                          <form action="/censo/familias/delete" method="POST">
+                            <input type="hidden" value="{{familia.id}}" name="id">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                          </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>  
     <a class="btn btn-primary" href="/censo/familias/registro">Añadir</a>
     <a class="btn btn-primary" href="/censo/generadores">Ver Generadores</a>
 </div>
 {% endblock %}
 
 {% block scripts %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const ordenamientoForm = document.getElementById('ordenamiento-form');
-        const tablaFamilias = document.getElementById('tabla-familias');
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var orden;
 
-        function cargarTabla(criterio, orden, metodo) {
-            fetch(`/censo/familias?criterio=${criterio}&orden=${orden}&metodo=${metodo}`, {
-                method: 'GET',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.text())
-            .then(data => {
-                tablaFamilias.innerHTML = data;
-            })
-            .catch(error => console.error('Error al cargar la tabla:', error));
-        }
+        $('.orden-button').on('click', function() {
+          orden = $(this).data('orden');
+        });
 
-        ordenamientoForm.addEventListener('click', function(event) {
-            if (event.target.matches('.btn')) {
-                const criterio = document.getElementById('criterio').value;
-                const metodo = document.getElementById('metodo').value;
-                const orden = event.target.getAttribute('data-orden');
-                cargarTabla(criterio, orden, metodo);
+        $('#ordenamiento-form').on('submit', function(event) {
+            event.preventDefault();
+            var metodo_o = $('#metodo-ord').val();
+            var criterio = $('#criterio').val();
+
+            if (metodo_o && criterio && orden !== undefined) { 
+              window.location.href = `/censo/familias/order/${metodo_o}/${criterio}/${orden}`; 
+            } else { 
+              console.log("Valores de formulario inválidos."); 
+            }
+        });
+
+        $('#busqueda-form').on('submit', function(event) {
+            event.preventDefault();
+            var metodo_b = $('#metodo-busq').val();
+            var atributo = $('#atributo').val();
+            var type = "1";
+            var valor = $('#valor').val();
+
+            if (metodo_b && atributo && type && valor !== undefined) { 
+              window.location.href = `/censo/familias/search/${metodo_b}/${atributo}/${type}/${valor}`; 
+            } else { 
+              console.log("Valores de formulario inválidos."); 
             }
         });
     });
-  </script>
+</script>
 {% endblock %}
+

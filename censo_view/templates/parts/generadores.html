@@ -8,6 +8,79 @@
       <div class="card-title">Generadores</div>
     </div>
     <div class="card-body">
+      <form id="busqueda-form" class="mb-4">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-2">
+                <label for="metodo" class="form-label">Método de Busqueda:</label>
+                <select class="form-select" id="metodo-busq" name="metodo-busq">
+                    <option value="lineal">LinealSearch</option>
+                    <option value="binary">BinarySearch</option>
+                </select>
+            </div>  
+
+            <!-- Selector de atributo de búsqueda -->
+            <div class="col-md-2">
+                <label for="atributo" class="form-label">Buscar por:</label>
+                <select class="form-select" id="atributo" name="atributo">
+                    <option value="id">Id</option>
+                    <option value="marca">Marca</option>
+                    <option value="modelo">Modelo</option>
+                    <option value="consumoPorHora">Consumo</option>
+                    <option value="energiaGenerada">Energia Generada</option>
+                    <option value="precio">Precio</option>
+                    <option value="uso">Uso</option>
+                </select>
+            </div>
+
+            <!-- Campo de valor de búsqueda -->
+            <div class="col-md-6">
+                <label for="valor" class="form-label">Valor de búsqueda:</label>
+                <input type="text" class="form-control" id="valor" name="valor" rows="1" required></input>
+            </div>
+
+            <!-- Botón de buscar -->
+            <div class="col-md-2 text-end">
+                <label class="form-label d-block invisible">Buscar</label>
+                <button type="submit" class="btn btn-primary w-100" id="btn-buscar">Buscar</button>
+            </div>
+        </div>
+      </form>
+
+      <!-- Formulario de ordenamiento -->
+      <form id="ordenamiento-form" class="mb-4">
+        <div class="row g-2 align-items-center">
+            <!-- Selector de método de ordenamiento -->
+            <div class="col-md-4">
+              <label for="metodo" class="form-label">Método de Ordenamiento:</label>
+              <select class="form-select" id="metodo-ord" name="metodo-ord">
+                  <option value="shellsort">ShellSort</option>
+                  <option value="mergesort">MergeSort</option>
+                  <option value="quicksort">QuickSort</option>
+              </select>
+            </div>  
+          
+            <!-- Selector de criterio de ordenamiento -->
+            <div class="col-md-4">
+                <label for="criterio" class="form-label">Ordenar por:</label>
+                <select class="form-select" id="criterio" name="criterio">
+                  <option value="id">Id</option>
+                  <option value="marca">Marca</option>
+                  <option value="modelo">Modelo</option>
+                  <option value="consumoPorHora">Consumo</option>
+                  <option value="energiaGenerada">Energia Generada</option>
+                  <option value="precio">Precio</option>
+                  <option value="uso">Uso</option>
+                </select>
+            </div>
+
+            <!-- Botones de orden -->
+            <div class="col-md-4 text-end">
+                <label class="form-label d-block">Orden:</label>
+                <button type="submit" class="btn btn-secondary me-2 orden-button" id="ascendente" data-orden="1">Ascendente</button>
+                <button type="submit" class="btn btn-secondary orden-button" id="descendente" data-orden="0">Descendente</button>
+            </div>
+        </div>
+      </form>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -47,4 +120,43 @@
       </table>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var orden;
+
+        $('.orden-button').on('click', function() {
+          orden = $(this).data('orden');
+        });
+
+        $('#ordenamiento-form').on('submit', function(event) {
+            event.preventDefault();
+            var metodo_o = $('#metodo-ord').val();
+            var criterio = $('#criterio').val();
+
+            if (metodo_o && criterio && orden !== undefined) { 
+              window.location.href = `/censo/generadores/order/${metodo_o}/${criterio}/${orden}`; 
+            } else { 
+              console.log("Valores de formulario inválidos."); 
+            }
+        });
+
+        $('#busqueda-form').on('submit', function(event) {
+            event.preventDefault();
+            var metodo_b = $('#metodo-busq').val();
+            var atributo = $('#atributo').val();
+            var type = "1";
+            var valor = $('#valor').val();
+
+            if (metodo_b && atributo && type && valor !== undefined) { 
+              window.location.href = `/censo/generadores/search/${metodo_b}/${atributo}/${type}/${valor}`; 
+            } else { 
+              console.log("Valores de formulario inválidos."); 
+            }
+        });
+    });
+</script>
 {% endblock %}

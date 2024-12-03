@@ -149,22 +149,25 @@ public class FamiliasAPI {
         HashMap map = new HashMap<>();
         FamiliaServices fs = new FamiliaServices();
 
-        Object searchValue = value;
-
         try {
-            searchValue = Integer.parseInt(value);
-        } catch (NumberFormatException excepcion) {
-            // No hacer nada
-        }
-
-        try {
-            Object data = fs.getListAll().linealSearch(attribute, searchValue, type);
             map.put("msg", "OK");
-            map.put("data", data);
 
-            if (data == null) {
-                map.put("data", "No existe");
-                return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+            if (type == 1) {
+                LinkedList data = fs.getListAll().multipleLinealSearch(attribute, value);
+                map.put("data", data.toArray());
+
+                if (data.isEmpty()) {
+                    map.put("data", "No existe");
+                    return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                }
+            } else {
+                Familia data = (Familia) fs.getListAll().atomicLinealSearch(attribute, value);
+                    map.put("data", data);
+
+                    if (data == null) {
+                        map.put("data", "No existe");
+                        return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                    }
             }
         } catch (Exception e) {
             map.put("msg", "Error");
@@ -181,22 +184,26 @@ public class FamiliasAPI {
     public Response binarySearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
         HashMap map = new HashMap<>();
         FamiliaServices fs = new FamiliaServices();
-        Object searchValue = value;
 
         try {
-            searchValue = Integer.parseInt(value);
-        } catch (NumberFormatException excepcion) {
-            // No hacer nada
-        }
-
-        try {
-            Object data = fs.getListAll().binarySearch(attribute, searchValue, type);
             map.put("msg", "OK");
-            map.put("data", data);
 
-            if (data == null) {
-                map.put("data", "No existe");
-                return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+            if (type == 1) {
+                LinkedList data = fs.getListAll().multipleBinarySearch(attribute, value);
+                map.put("data", data.toArray());
+
+                if (data.isEmpty()) {
+                    map.put("data", "No existe");
+                    return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                }
+            } else {
+                Familia data = (Familia) fs.getListAll().atomicBinarySearch(attribute, value);
+                    map.put("data", data);
+
+                    if (data == null) {
+                        map.put("data", "No existe");
+                        return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                    }
             }
         } catch (Exception e) {
             map.put("msg", "Error");

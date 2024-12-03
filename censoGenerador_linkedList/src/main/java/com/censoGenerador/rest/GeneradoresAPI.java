@@ -163,6 +163,78 @@ public class GeneradoresAPI {
         }
     }
 
+    @Path("/search/lineal/{attribute}/{type}/{value}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response linealSearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+        HashMap map = new HashMap<>();
+        GeneradorServices gs = new GeneradorServices();
+
+        try {
+            map.put("msg", "OK");
+
+            if (type == 1) {
+                LinkedList data = gs.getListAll().multipleLinealSearch(attribute, value);
+                map.put("data", data.toArray());
+
+                if (data.isEmpty()) {
+                    map.put("data", "No existe");
+                    return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                }
+            } else {
+                Generador data = (Generador) gs.getListAll().atomicLinealSearch(attribute, value);
+                    map.put("data", data);
+
+                    if (data == null) {
+                        map.put("data", "No existe");
+                        return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                    }
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
+        }
+
+        return Response.ok(map).build();
+    }
+
+    @Path("/search/binary/{attribute}/{type}/{value}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response binarySearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+        HashMap map = new HashMap<>();
+        GeneradorServices gs = new GeneradorServices();
+
+        try {
+            map.put("msg", "OK");
+
+            if (type == 1) {
+                LinkedList data = gs.getListAll().multipleBinarySearch(attribute, value);
+                map.put("data", data.toArray());
+
+                if (data.isEmpty()) {
+                    map.put("data", "No existe");
+                    return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                }
+            } else {
+                Generador data = (Generador) gs.getListAll().atomicBinarySearch(attribute, value);
+                    map.put("data", data);
+
+                    if (data == null) {
+                        map.put("data", "No existe");
+                        return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
+                    }
+            }
+        } catch (Exception e) {
+            map.put("msg", "Error");
+            map.put("data", e.toString());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
+        }
+
+        return Response.ok(map).build();
+    }
+
     @Path("/get/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
