@@ -46,9 +46,11 @@ public class GeneradoresAPI {
     @Path("/order/shellsort/{attribute}/{type}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response orderByShellSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+    public Response orderByShellSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) throws Exception {
         HashMap map = new HashMap<>();
         GeneradorServices gs = new GeneradorServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
+
         map.put("msg", "OK");
         
         try {
@@ -63,15 +65,22 @@ public class GeneradoresAPI {
             return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
         }
 
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Lectura de todos los generadores ordenadas por: " + attribute);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
+
         return Response.ok(map).build();
     }
 
     @Path("/order/mergesort/{attribute}/{type}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response orderByMergeSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+    public Response orderByMergeSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) throws Exception {
         HashMap map = new HashMap<>();
         GeneradorServices gs = new GeneradorServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
+
         map.put("msg", "OK");
         
         try {
@@ -86,15 +95,22 @@ public class GeneradoresAPI {
             return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
         }
 
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Lectura de todos los generadores ordenadas por: " + attribute);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
+
         return Response.ok(map).build();
     }
 
     @Path("/order/quicksort/{attribute}/{type}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response orderByQuickSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+    public Response orderByQuickSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) throws Exception {
         HashMap map = new HashMap<>();
         GeneradorServices gs = new GeneradorServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
+
         map.put("msg", "OK");
         
         try {
@@ -108,6 +124,11 @@ public class GeneradoresAPI {
             map.put("data", e.toString());
             return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
         }
+
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Lectura de todos los generadores ordenadas por: " + attribute);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
 
         return Response.ok(map).build();
     }
@@ -166,9 +187,10 @@ public class GeneradoresAPI {
     @Path("/search/lineal/{attribute}/{type}/{value}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response linealSearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+    public Response linealSearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) throws Exception {
         HashMap map = new HashMap<>();
         GeneradorServices gs = new GeneradorServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
 
         try {
             map.put("msg", "OK");
@@ -196,15 +218,21 @@ public class GeneradoresAPI {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
         }
 
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Busqueda Lineal del generador: " + value);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
+
         return Response.ok(map).build();
     }
 
     @Path("/search/binary/{attribute}/{type}/{value}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response binarySearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+    public Response binarySearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) throws Exception {
         HashMap map = new HashMap<>();
         GeneradorServices gs = new GeneradorServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
 
         try {
             map.put("msg", "OK");
@@ -231,6 +259,11 @@ public class GeneradoresAPI {
             map.put("data", e.toString());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
         }
+
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Busqueda Lineal del generador: " + value);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
 
         return Response.ok(map).build();
     }

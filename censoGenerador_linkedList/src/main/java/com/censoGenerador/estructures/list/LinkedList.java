@@ -498,7 +498,7 @@ public class LinkedList<E> {
     }
 
     private int partition(E[] lista, int low, int high, String attribute, Integer type) throws Exception {
-        E pivote = lista[high];
+        E pivote = lista[low + (high - low) / 2];
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
@@ -529,7 +529,7 @@ public class LinkedList<E> {
     }
 
     private int partition(E[] lista, int low, int high, Integer type) throws Exception {
-        E pivote = lista[high];
+        E pivote = lista[low + (high - low) / 2];
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
@@ -567,6 +567,21 @@ public class LinkedList<E> {
         return lista;
     }
 
+    //PARA NUMEROS
+    public LinkedList<E> multipleLinealSearch(Object value) throws Exception {
+        LinkedList<E> list = new LinkedList<>();
+        if (!this.isEmpty()) {
+            E[] aux = this.toArray();
+            for (int i = 0; i < aux.length; i++) {
+                if (aux[i].equals(value)) {
+                    list.add(aux[i]);
+                    break;
+                }
+            }
+        }
+        return list;
+    }
+
     public E atomicLinealSearch(String attribute, Object value) throws Exception {
         E obj = null;
         if (!this.isEmpty()) {
@@ -579,6 +594,21 @@ public class LinkedList<E> {
                     if (attrValueStr.equals(valueStr) || attrValueStr.toLowerCase().startsWith(valueStr.toLowerCase())) {
                         obj = aux[i];
                     }
+                }
+            }
+        }
+        return obj;
+    }
+
+    //PARA NUMEROS
+    public E atomicLinealSearch(Object value) throws Exception {
+        E obj = null;
+        if (!this.isEmpty()) {
+            E[] aux = this.toArray();
+            for (int i = 0; i < aux.length; i++) {
+                if (aux[i].equals(value)) {
+                    obj = aux[i];
+                    break;
                 }
             }
         }
@@ -641,6 +671,52 @@ public class LinkedList<E> {
         return lista;
     }
 
+    //PARA NUMEROS
+    public LinkedList<E> multipleBinarySearch(Object value) throws Exception {
+        LinkedList<E> list = new LinkedList<>();
+        if (!this.isEmpty()) {
+            this.orderByQuickSort(0);
+            E[] aux = this.toArray();
+            int first = 0;
+            int last = aux.length - 1;
+            Boolean find = false;
+            while (first <= last && find == false) {
+                int mid = (first + last) / 2;
+                if (aux[mid].equals(value)) {
+                    list.add(aux[mid]);
+                    int left = mid - 1;
+                    while (left >= 0) {
+                        if (aux[left].equals(value)) {
+                            list.addHeader(aux[left]);
+                            left--;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    int right = mid + 1;
+                    while (right < aux.length) {
+                        if (aux[right].equals(value)) {
+                            list.add(aux[right]);
+                            right++;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    find = true;
+                } else {
+                    if (compare(aux[mid], value, 0)) {
+                        last = mid - 1;
+                    } else {
+                        first = mid + 1;
+                    }
+                }
+            }
+        }
+        return list;
+    }
+
     public E atomicBinarySearch(String attribute, Object value) throws Exception {
         E obj = null;
         if (!this.isEmpty()) {
@@ -667,6 +743,32 @@ public class LinkedList<E> {
                         }
                     }
                     
+                }
+            }
+        }
+        return obj;
+    }
+
+    //PARA NUMEROS
+    public E atomicBinarySearch(Object value) throws Exception {
+        E obj = null;
+        if (!this.isEmpty()) {
+            this.orderByQuickSort(0);
+            E[] aux = this.toArray();
+            int first = 0;
+            int last = aux.length - 1;
+            Boolean find = false;
+            while (first <= last && find == false) {
+                int mid = (first + last) / 2;
+                if (aux[mid].equals(value)) {
+                    obj = aux[mid];
+                    find = true;
+                } else {
+                    if (compare(aux[mid], value, 0)) {
+                        last = mid - 1;
+                    } else {
+                        first = mid + 1;
+                    }
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.censoGenerador.controls.dao.services;
 
 import com.censoGenerador.controls.dao.CrudRegisterDao;
 import com.censoGenerador.estructures.list.LinkedList;
+import com.censoGenerador.estructures.stack.Stack;
 import com.censoGenerador.models.CrudRegister;
 
 public class CrudRegisterServices {
@@ -19,15 +20,12 @@ public class CrudRegisterServices {
         this.register.setRegister(register);
     }
 
-    public LinkedList getListAll() {
-        return this.register.getListAll();
+    public Stack getListAll() {
+        return this.register.getStackAll();
     }
 
     public Boolean save() throws Exception {
         return this.register.save();
     }
 
-    public CrudRegister get(Integer id) throws Exception {
-        return this.register.get(id);
-    }
 }

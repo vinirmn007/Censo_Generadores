@@ -38,4 +38,8 @@ public class Stack <E> {
     public String toString() {
         return stackOperation.toString();
     }
+
+    public E[] toArray() {
+        return (E[]) stackOperation.toArray();
+    }
 }

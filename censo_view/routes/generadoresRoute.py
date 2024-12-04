@@ -30,8 +30,10 @@ def save_generador():
 @generadoresRouter.route('/censo/generadores')
 def linkedList_generadores():
     r = requests.get(URL + 'generadores')
+    f = requests.get(URL + 'familias')
     data = r.json().get('data')
-    return render_template('parts/generadores.html', generadores=data)
+    data_f = f.json().get('data')
+    return render_template('parts/generadores.html', generadores=data, familias=data_f)
 
 #ORDENA LOS GENERADORES
 @generadoresRouter.route('/censo/generadores/order/<metodo>/<atributo>/<tipo>')
@@ -39,11 +41,13 @@ def order_generators(metodo, atributo, tipo):
     url = URL + "generadores/order/"+metodo+"/"+atributo+"/"+tipo
     
     r = requests.get(url) 
+    f = requests.get(URL + 'familias')
     
     data = r.json()
+    data_f = f.json().get('data')
     if(r.status_code == 200):
-        flash('Generador encontrado', category='info')
-        return render_template('parts/generadores.html', generadores = data["data"])
+        flash('Generador ordenado', category='info')
+        return render_template('parts/generadores.html', generadores = data["data"], familias=data_f)
     else:        
         flash('No se ha podido ordenar', category='error')
         return redirect('/censo/generadores')
@@ -54,11 +58,13 @@ def search_generators(metodo, atributo, tipo, valor):
     url = URL + "generadores/search/"+metodo+"/"+atributo+"/"+tipo+"/"+valor
     
     r = requests.get(url) 
+    f = requests.get(URL + 'familias')
     
     data = r.json()
+    data_f = f.json().get('data')
     if(r.status_code == 200):
         flash('Generador encontrado', category='info')
-        return render_template('parts/generadores.html', generadores = data["data"])
+        return render_template('parts/generadores.html', generadores = data["data"], familias=data_f)
     else:        
         flash('No se ha podido encontrar', category='error')
         return redirect('/censo/generadores')

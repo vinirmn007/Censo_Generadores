@@ -68,8 +68,8 @@
             <!-- Botones de orden -->
             <div class="col-md-4 text-end">
                 <label class="form-label d-block">Orden:</label>
-                <button type="submit" class="btn btn-secondary me-2 orden-button" id="ascendente" data-orden="1">Ascendente</button>
-                <button type="submit" class="btn btn-secondary orden-button" id="descendente" data-orden="0">Descendente</button>
+                <button type="submit" class="btn btn-secondary me-2 orden-button" id="ascendente" data-orden="0">Ascendente</button>
+                <button type="submit" class="btn btn-secondary orden-button" id="descendente" data-orden="1">Descendente</button>
             </div>
         </div>
       </form>
@@ -88,7 +88,13 @@
                   <td>{{ familia.id }}</td>
                   <td>{{ familia.apellido }}</td>
                   <td>{{ familia.nroIntegrantes }}</td>
-                  <td>{{ familia.generadorId }}</td>
+                  <td>
+                    {% for generador in generadores %}
+                      {% if generador.id == familia.generadorId %}
+                        {{ generador.modelo }}
+                      {% endif %}
+                    {% endfor %}
+                  </td>
               </tr>
               {% endfor %}
           </tbody>

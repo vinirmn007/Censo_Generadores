@@ -13,8 +13,10 @@ def home():
 @familiasRouter.route('/censo/')
 def view_censo():
     r = requests.get(URL + 'censoAPI')
+    g = requests.get(URL + 'generadores')
     data = r.json().get('data')
-    return render_template('parts/censo.html', familiasCG=data)
+    data_g = g.json().get('data')
+    return render_template('parts/censo.html', familiasCG=data, generadores=data_g)
 
 #ORDENA LAS FAMILIAS CON GENERADOR
 @familiasRouter.route('/censo/order/<metodo>/<atributo>/<tipo>')
@@ -22,11 +24,13 @@ def order_families_CG(metodo, atributo, tipo):
     url = URL + "censoAPI/order/"+metodo+"/"+atributo+"/"+tipo
     
     r = requests.get(url) 
+    g = requests.get(URL + 'generadores')
     
     data = r.json()
+    data_g = g.json().get('data')
     if(r.status_code == 200):
         flash('Familia ordenada', category='info')
-        return render_template('parts/censo.html', familiasCG = data["data"])
+        return render_template('parts/censo.html', familiasCG = data["data"], generadores=data_g)
     else:        
         flash('No se ha podido ordenar', category='error')
         return redirect('/censo/')
@@ -37,11 +41,13 @@ def search_families_CG(metodo, atributo, tipo, valor):
     url = URL + "censoAPI/search/"+metodo+"/"+atributo+"/"+tipo+"/"+valor
     
     r = requests.get(url) 
+    g = requests.get(URL + 'generadores')
     
     data = r.json()
+    data_g = g.json().get('data')
     if(r.status_code == 200):
         flash('Familia encontrada', category='info')
-        return render_template('parts/censo.html', familiasCG = data["data"])
+        return render_template('parts/censo.html', familiasCG = data["data"], generadores=data_g)
     else:        
         flash('No se ha podido encontrar', category='error')
         return redirect('/censo')
@@ -50,8 +56,10 @@ def search_families_CG(metodo, atributo, tipo, valor):
 @familiasRouter.route('/censo/familias')
 def linkedList_view_familias():
     r = requests.get(URL + 'familias')
+    g = requests.get(URL + 'generadores')
     data = r.json().get('data')
-    return render_template('parts/familias.html', familias=data)
+    data_g = g.json().get('data')
+    return render_template('parts/familias.html', familias=data, generadores=data_g)
 
 #ORDENA LAS FAMILIAS
 @familiasRouter.route('/censo/familias/order/<metodo>/<atributo>/<tipo>')
@@ -59,11 +67,13 @@ def order_families(metodo, atributo, tipo):
     url = URL + "familias/order/"+metodo+"/"+atributo+"/"+tipo
     
     r = requests.get(url) 
+    g = requests.get(URL + 'generadores')
     
     data = r.json()
+    data_g = g.json().get('data')
     if(r.status_code == 200):
         flash('Familia ordenada', category='info')
-        return render_template('parts/familias.html', familias = data["data"])
+        return render_template('parts/familias.html', familias = data["data"], generadores=data_g)
     else:        
         flash('No se ha podido ordenar', category='error')
         return redirect('/censo/familias')
@@ -74,11 +84,13 @@ def search_families(metodo, atributo, tipo, valor):
     url = URL + "familias/search/"+metodo+"/"+atributo+"/"+tipo+"/"+valor
     
     r = requests.get(url) 
+    g = requests.get(URL + 'generadores')
     
     data = r.json()
+    data_g = g.json().get('data')
     if(r.status_code == 200):
         flash('Familia encontrada', category='info')
-        return render_template('parts/familias.html', familias = data["data"])
+        return render_template('parts/familias.html', familias = data["data"], generadores=data_g)
     else:        
         flash('No se ha podido encontrar', category='error')
         return redirect('/censo/familias')

@@ -55,9 +55,11 @@ public class CensoAPI {
     @Path("/order/shellsort/{attribute}/{type}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response orderByShellSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+    public Response orderByShellSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) throws Exception {
         HashMap map = new HashMap<>();
         CensoServices cs = new CensoServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
+
         map.put("msg", "OK");
         
         try {
@@ -73,15 +75,22 @@ public class CensoAPI {
             return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
         }
 
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Lectura de todas las familias ordenadas por: " + attribute);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
+
         return Response.ok(map).build();
     }
 
     @Path("/order/mergesort/{attribute}/{type}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response orderByMergeSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+    public Response orderByMergeSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) throws Exception {
         HashMap map = new HashMap<>();
         CensoServices cs = new CensoServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
+
         map.put("msg", "OK");
         
         try {
@@ -97,15 +106,22 @@ public class CensoAPI {
             return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
         }
 
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Lectura de todas las familias ordenadas por: " + attribute);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
+
         return Response.ok(map).build();
     }
 
     @Path("/order/quicksort/{attribute}/{type}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response orderByQuickSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) {
+    public Response orderByQuickSort(@PathParam("attribute") String attribute, @PathParam("type") Integer type) throws Exception {
         HashMap map = new HashMap<>();
         CensoServices cs = new CensoServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
+
         map.put("msg", "OK");
         
         try {
@@ -121,15 +137,21 @@ public class CensoAPI {
             return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
         }
 
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Lectura de todas las familias ordenadas por: " + attribute);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
+
         return Response.ok(map).build();
     }
 
     @Path("/search/lineal/{attribute}/{type}/{value}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response linealSearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+    public Response linealSearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) throws Exception {
         HashMap map = new HashMap<>();
         CensoServices cs = new CensoServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
         cs.determinarFamiliasConGenerador();
 
         try {
@@ -158,15 +180,21 @@ public class CensoAPI {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
         }
 
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Busqueda Lineal de la familia: " + value);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
+
         return Response.ok(map).build();
     }
 
     @Path("/search/binary/{attribute}/{type}/{value}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response binarySearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) {
+    public Response binarySearch(@PathParam("attribute") String attribute, @PathParam("type") Integer type, @PathParam("value") String value) throws Exception {
         HashMap map = new HashMap<>();
         CensoServices cs = new CensoServices();
+        CrudRegisterServices crs = new CrudRegisterServices();
         cs.determinarFamiliasConGenerador();
 
         try {
@@ -194,6 +222,11 @@ public class CensoAPI {
             map.put("data", e.toString());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(map).build();
         }
+
+        crs.getRegister().setOperacion("READ");
+        crs.getRegister().setDetalle("Busqueda Lineal de la familia: " + value);
+        crs.getRegister().setHora(LocalDateTime.now().toString());
+        crs.save();
 
         return Response.ok(map).build();
     }
