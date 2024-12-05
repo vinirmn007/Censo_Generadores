@@ -498,7 +498,7 @@ public class LinkedList<E> {
     }
 
     private int partition(E[] lista, int low, int high, String attribute, Integer type) throws Exception {
-        E pivote = lista[low + (high - low) / 2];
+        E pivote = lista[high];
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
@@ -591,7 +591,7 @@ public class LinkedList<E> {
                 if (attrValue != null) {
                     String attrValueStr = attrValue.toString();
                     String valueStr = value.toString();
-                    if (attrValueStr.equals(valueStr) || attrValueStr.toLowerCase().startsWith(valueStr.toLowerCase())) {
+                    if (attrValueStr.equals(valueStr)) {
                         obj = aux[i];
                     }
                 }
@@ -624,7 +624,7 @@ public class LinkedList<E> {
             int first = 0;
             int last = aux.length - 1;
             
-            while (first <= last) {
+            while (first < last) {
                 int mid = (first + last) / 2;
                 Object attrValue = exist_attribute(aux[mid], attribute);
 

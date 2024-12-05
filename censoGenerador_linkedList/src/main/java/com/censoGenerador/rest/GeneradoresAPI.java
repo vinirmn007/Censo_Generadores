@@ -166,7 +166,7 @@ public class GeneradoresAPI {
             fs.setFamilia(familia);
             fs.update();
 
-            gs.save();
+            //gs.save();
 
             res.put("msg", "OK");
             res.put("data", "Generador registrado y asignado a familia correctamente");

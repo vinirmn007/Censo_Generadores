@@ -67,6 +67,7 @@ public class testAlgoritmos {
             System.out.println("Multiple Binary: " + testSearch(lista, "binary", 200) + " ns");
             System.out.println("Atomic Lineal: " + testSearch(lista, "lineal", 666) + " ns");
             System.out.println("Atomic Binary: " + testSearch(lista, "binary", 666) + " ns");
+            //System.out.println(lista.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
