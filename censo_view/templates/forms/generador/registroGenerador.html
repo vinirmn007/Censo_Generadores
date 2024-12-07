@@ -5,8 +5,17 @@
 {% block content %}
 <h1>Registro de Generador</h1>
 <div class="col-md-6 col-lg-4">    
+    
     <form action="/censo/familias/generador/save" method="POST">
         <input type="hidden" value="{{familia.id}}" name="familiaId">
+        <div class="form-group">
+            <h6>Familia:</h6>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ familia.apellido }}</h5>
+                </div>
+            </div>
+        </div>
         <div class="form-group form-inline">
             <label
                 for="inlineinput"

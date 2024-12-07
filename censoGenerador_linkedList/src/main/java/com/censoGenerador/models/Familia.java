@@ -48,6 +48,6 @@ public class Familia {
 
     @Override
     public String toString() {
-        return "Familia{" + "apellido='" + apellido + '\'' + ", generadores=" + generadorId + '}';
+        return "Familia{" + "apellido='" + apellido + '\'' + ", id=" + id + '}';
     }
 }

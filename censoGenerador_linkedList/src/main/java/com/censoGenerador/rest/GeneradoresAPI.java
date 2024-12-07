@@ -237,22 +237,14 @@ public class GeneradoresAPI {
         try {
             map.put("msg", "OK");
 
-            if (type == 1) {
-                LinkedList data = gs.getListAll().multipleBinarySearch(attribute, value);
-                map.put("data", data.toArray());
+            Generador[] data = new Generador[1];
+            data[0] = (Generador) gs.getListAll().binarySearch(attribute, value);
 
-                if (data.isEmpty()) {
-                    map.put("data", "No existe");
-                    return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
-                }
-            } else {
-                Generador data = (Generador) gs.getListAll().atomicBinarySearch(attribute, value);
-                    map.put("data", data);
+            map.put("data", data);
 
-                    if (data == null) {
-                        map.put("data", "No existe");
-                        return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
-                    }
+            if (data[0] == null) {
+                map.put("data", "No existe");
+                return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
             }
         } catch (Exception e) {
             map.put("msg", "Error");

@@ -8,7 +8,7 @@
       <div class="card-title">Familias</div>
     </div>
     <div class="card-body">
-      <form id="busqueda-form" class="mb-4">
+      <form id="search-form" class="mb-4">
         <div class="row g-2 align-items-center">
             <div class="col-md-2">
                 <label for="metodo" class="form-label">Método de Busqueda:</label>
@@ -43,7 +43,7 @@
       </form>
 
       <!-- Formulario de ordenamiento -->
-      <form id="ordenamiento-form" class="mb-4">
+      <form id="ord-form" class="mb-4">
         <div class="row g-2 align-items-center">
             <!-- Selector de método de ordenamiento -->
             <div class="col-md-4">
@@ -118,7 +118,7 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script>
     $(document).ready(function() {
         var orden;
@@ -127,30 +127,32 @@
           orden = $(this).data('orden');
         });
 
-        $('#ordenamiento-form').on('submit', function(event) {
+        $('#ord-form').on('submit', function(event) {
             event.preventDefault();
             var metodo_o = $('#metodo-ord').val();
             var criterio = $('#criterio').val();
 
+            var url = `/censo/familias/order/${metodo_o}/${criterio}/${orden}`;
+            console.log(url);
+
             if (metodo_o && criterio && orden !== undefined) { 
-              window.location.href = `/censo/familias/order/${metodo_o}/${criterio}/${orden}`; 
-            } else { 
-              console.log("Valores de formulario inválidos."); 
-            }
+              window.location.href = url; 
+            } 
         });
 
-        $('#busqueda-form').on('submit', function(event) {
+        $('#search-form').on('submit', function(event) {
             event.preventDefault();
             var metodo_b = $('#metodo-busq').val();
             var atributo = $('#atributo').val();
             var type = "1";
             var valor = $('#valor').val();
 
+            var url = `/censo/familias/search/${metodo_b}/${atributo}/${type}/${valor}`;
+            //console.log(url);
+
             if (metodo_b && atributo && type && valor !== undefined) { 
-              window.location.href = `/censo/familias/search/${metodo_b}/${atributo}/${type}/${valor}`; 
-            } else { 
-              console.log("Valores de formulario inválidos."); 
-            }
+              window.location.href = url; 
+            } 
         });
     });
 </script>

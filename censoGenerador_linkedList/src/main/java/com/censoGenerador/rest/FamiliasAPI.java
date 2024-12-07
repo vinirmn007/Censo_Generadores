@@ -216,23 +216,16 @@ public class FamiliasAPI {
         try {
             map.put("msg", "OK");
 
-            if (type == 1) {
-                LinkedList data = fs.getListAll().multipleBinarySearch(attribute, value);
-                map.put("data", data.toArray());
+            Familia[] data = new Familia[1];
+            data[0] = (Familia) fs.getListAll().binarySearch(attribute, value);
 
-                if (data.isEmpty()) {
-                    map.put("data", "No existe");
-                    return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
-                }
-            } else {
-                Familia data = (Familia) fs.getListAll().atomicBinarySearch(attribute, value);
-                    map.put("data", data);
+            map.put("data", data);
 
-                    if (data == null) {
-                        map.put("data", "No existe");
-                        return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
-                    }
+            if (data[0] == null) {
+                map.put("data", "No existe");
+                return Response.status(Response.Status.BAD_REQUEST).entity(map).build();
             }
+            
         } catch (Exception e) {
             map.put("msg", "Error");
             map.put("data", e.toString());

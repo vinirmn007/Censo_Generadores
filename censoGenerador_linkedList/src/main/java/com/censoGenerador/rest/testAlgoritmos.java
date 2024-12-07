@@ -10,7 +10,7 @@ public class testAlgoritmos {
         LinkedList<Integer> lista = new LinkedList<>();
         Random random = new Random();
         for (int i = 0; i < size; i++) {
-            arr[i] = random.nextInt(1000);
+            arr[i] = random.nextInt(10000);
         }
         lista.toList(arr);
         return lista;
@@ -35,38 +35,41 @@ public class testAlgoritmos {
         return (end - start) / 1000000.0;
     }
 
-    static Double testSearch(LinkedList<Integer> lista, String metodo, Object valor) throws Exception {
+    static Double testSearch(LinkedList<Integer> lista, String metodo, Integer valor) throws Exception {
         Long start = System.nanoTime();
         switch (metodo) {
             case "m_lineal":
                 lista.multipleLinealSearch(valor);
                 break;
-            case "m_binary":
-                lista.multipleBinarySearch(valor);
-                break;
             case "a_lineal":
                 lista.atomicLinealSearch(valor);
                 break;
-            case "a_binary":
-                lista.atomicLinealSearch(valor);
+            case "binary":
+                lista.binarySearch(valor);
                 break;
             default:
                 break;
         }
         Long end = System.nanoTime();
-        return (end - start)/1.0;
+        return (end - start)/1000000.0;
     }
      public static void main(String[] args) {
-        LinkedList<Integer> lista = crearLista(25000);
-        //System.out.println(lista.toString());
+        LinkedList<Integer> lista_orden = crearLista(20000);
+        LinkedList<Integer> lista_busqueda = crearLista(20000);
+        //System.out.println(lista_busqueda.toString());
         try {
-            System.out.println("Shell: " + testOrder(lista, "shell", 0) + " ms");
-            System.out.println("Merge: " + testOrder(lista, "merge", 0) + " ms");
-            System.out.println("Quick: " + testOrder(lista, "quick", 0) + " ms");
-            System.out.println("Multiple Lineal: " + testSearch(lista, "lineal", 200) + " ns");
-            System.out.println("Multiple Binary: " + testSearch(lista, "binary", 200) + " ns");
-            System.out.println("Atomic Lineal: " + testSearch(lista, "lineal", 666) + " ns");
-            System.out.println("Atomic Binary: " + testSearch(lista, "binary", 666) + " ns");
+            LinkedList<Integer> sh = lista_orden.clone();
+            System.out.println("Shell: " + testOrder(sh, "shell", 0) + " ms");
+
+            LinkedList<Integer> mg = lista_orden.clone();
+            System.out.println("Merge: " + testOrder(mg, "merge", 0) + " ms");
+
+            LinkedList<Integer> qs = lista_orden.clone();
+            System.out.println("Quick: " + testOrder(qs, "quick", 0) + " ms");
+
+            System.out.println("Multiple Lineal: " + testSearch(lista_busqueda, "m_lineal", 6000) + " ms");
+            System.out.println("Atomic Lineal: " + testSearch(lista_busqueda, "a_lineal", 6000) + " ms");
+            System.out.println("Binary: " + testSearch(lista_busqueda.orderByQuickSort(0), "binary", 6000) + " ms");
             //System.out.println(lista.toString());
         } catch (Exception e) {
             e.printStackTrace();
